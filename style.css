@@ -1,0 +1,44 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+    color: white;
+    margin-block-start: unset;
+    margin-block-end: unset;
+}
+
+.bg-details {
+    background-color: #FC6C6D;
+    height: 50vh;
+
+}
+
+.global-info{
+    padding-left: 30px;
+    padding-top: 50px;
+}
+
+.arrow-back{
+    width: 32px;
+    height: 32px;
+    color: white;
+}
+
+.bg-details-chart {
+    background-color: white;
+    height: calc(50vh + 40px);
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    margin-top: -40px;
+}
+
+.pokemon-sprite{
+    display: flex;
+    justify-content: center;
+}
+
+.pokemon-sprite img{
+    margin-top: -380px;
+}

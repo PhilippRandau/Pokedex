@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex</title>
+
+    <link rel="stylesheet" href="./style.css">
+
+    <script>
+        let currentPokemon;
+
+
+        async function loadPokemon() {
+            let url = `https://pokeapi.co/api/v2/pokemon/charmander`;
+            let response = await fetch(url);
+            currentPokemon = await response.json();
+            showDetailsPokemon();
+        }
+
+        function showDetailsPokemon() {
+            let pokemonName = document.getElementById('pokemon-name');
+            pokemonName.innerHTML = `${currentPokemon['forms'][0]['name']}`;
+
+            let pokemonSprite = document.getElementById('pokemon-sprite')
+            pokemonSprite.src = `${currentPokemon['sprites']['other']['official-artwork']['front_default']}`;
+        }
+    </script>
+
+</head>
+
+<body onload="loadPokemon()">
+    <section>
+        <div class="bg-details">
+            <div class="global-info">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="arrow-back" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                </svg>
+                <h1 id="pokemon-name"></h1>
+            </div>
+        </div>
+        <div class="bg-details-chart">
+            <div class="pokemon-sprite">
+                <img id="pokemon-sprite" src="" alt="">
+            </div>
+        </div>
+    </section>
+
+
+</body>
+
+</html>
