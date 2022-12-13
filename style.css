@@ -10,7 +10,7 @@ h1 {
     margin-block-end: unset;
 }
 
-.pokemon-details{
+.pokemon-details {
     background-color: transparent;
     display: flex;
     justify-content: center;
@@ -22,22 +22,22 @@ h1 {
 .bg-details {
     background-color: #FC6C6D;
     height: 40vh;
-    width: 700px;
+    width: 580px;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
 }
 
-.global-info{
+.global-info {
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 50px;
     display: flex;
     flex-direction: column;
-    
+
 }
 
 
-.arrow-back{
+.arrow-back {
     width: 32px;
     height: 32px;
     color: white;
@@ -45,12 +45,14 @@ h1 {
     margin-bottom: 50px;
 }
 
-.pokemon-id{
+.pokemon-id {
     color: white;
     text-align: end;
+    font-weight: 600;
+    font-size: 20px;
 }
 
-.pokemon-type{
+.pokemon-type {
     width: 30px;
     text-align: center;
     padding: 5px 30px;
@@ -59,24 +61,37 @@ h1 {
     color: white;
 }
 
+.pokemon-sprite {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 70px;
+}
+
+.pokemon-sprite img {
+    position: relative;
+    top: -250px;
+    height: 300px;
+}
+
 .bg-details-chart {
     background-color: white;
     height: calc(30vh + 40px);
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
     margin-top: -40px;
-    width: 700px;
+    width: 580px;
 }
 
-.pokemon-details-nav{
+.pokemon-details-nav {
     display: flex;
     justify-content: space-between;
-    
+
     padding-left: 50px;
     padding-right: 50px;
 }
 
-.pokemon-details-nav button{
+.pokemon-details-nav button {
     background-color: white;
     border: transparent;
     cursor: pointer;
@@ -84,31 +99,24 @@ h1 {
     border-bottom: 2px solid rgba(0, 0, 0, 0.10);
 }
 
-.pokemon-details-nav button:hover{
+.pokemon-details-nav button:hover {
     border-bottom: 2px solid black;
-    
+
 }
 
-.buttons-underline{
+.buttons-underline {
     border-bottom: 2px solid rgba(0, 0, 0, 0.10);
     margin: -2px;
     margin-left: 50px;
     margin-right: 50px;
 }
 
-.pokemon-sprite{
-    display: flex;
-    justify-content: center;
-    width: 700px;
-    height: 70px;
+
+.pokemon-details-about {
+    margin-left: 50px;
+    margin-top: 20px;
 }
 
-.pokemon-sprite img{
-    position: relative;
-    top: -250px;
-    height: 300px;
-}
-
-.d-none{
+.d-none {
     display: none;
 }

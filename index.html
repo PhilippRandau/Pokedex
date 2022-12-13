@@ -12,7 +12,7 @@
 
     <script>
         let currentPokemon;
-
+        
 
         async function loadPokemon() {
             let url = `https://pokeapi.co/api/v2/pokemon/charmander`;
@@ -20,6 +20,8 @@
             currentPokemon = await response.json();
             showDetailsPokemon();
         }
+
+        
 
 
         function showDetailsPokemon() {
@@ -34,6 +36,9 @@
 
             let pokemonSprite = document.getElementById('pokemon-sprite')
             pokemonSprite.src = `${currentPokemon['sprites']['other']['official-artwork']['front_default']}`;
+
+            //add later to onclick on pokemon in overview
+            loadPokemonSpecies();
         }
 
 
@@ -54,6 +59,37 @@
                 return (currentPokemon['id'] + "").padStart(3, "0");
             }
         }
+
+        async function loadPokemonSpecies(){
+            let url = `${currentPokemon['species']['url']}`;
+            let response = await fetch(url);
+            let currentPokemonSpecies = await response.json();
+            showPokemonSpecies(currentPokemonSpecies);
+        }
+
+        function showPokemonSpecies(currentPokemonSpecies){
+            let pokemonSpecies = document.getElementById('pokemon-species');
+            let modifiedSpeciesName = currentPokemonSpecies['genera'][7]['genus'].split(' ')
+            pokemonSpecies.innerHTML = `${modifiedSpeciesName[0]}`;
+        }
+
+            // let pokemonHeight = document.getElementById('pokemon-height');
+            // pokemonHeight.innerHTML = `${}`;
+
+            // let pokemonWeight = document.getElementById('pokemon-weight');
+            // pokemonWeight.innerHTML = `${}`;
+
+            // let pokemonAbilities = document.getElementById('pokemon-abilities');
+            // pokemonAbilities.innerHTML = `${}`;
+
+            // let pokemonGender = document.getElementById('pokemon-gender');
+            // pokemonGender.innerHTML = `${}`;
+
+            // let pokemonEggGroups = document.getElementById('pokemon-egg-groups');
+            // pokemonEggGroups.innerHTML = `${}`;
+            
+            // let pokemonEggCycle = document.getElementById('pokemon-egg-cycle');
+            // pokemonEggCycle.innerHTML = `${}`;
 
     </script>
 
@@ -81,7 +117,44 @@
             </nav>
             <div class="buttons-underline"></div>
             <div id="pokemon-details-content" class="pokemon-details-content">
-                
+                <div class="pokemon-details-about">
+                    <div>
+                        <span>Species</span>
+                        <span id="pokemon-species" class="pokemon-species">s</span>
+                    </div>
+                    
+                    <div>
+                        <span>Height</span>
+                        <span id="pokemon-height" class="pokemon-height"></span>
+                    </div>
+                    
+                    <div>
+                        <span>Weight</span>
+                        <span id="pokemon-weight" class="pokemon-weight"></span>
+                    </div>
+                    
+                    <div>
+                        <span>Abilities</span>
+                        <span id="pokemon-abilities" class="pokemon-abilities"></span>
+                    </div>
+                    
+                    <h3>Breeding</h3>
+                    <div>
+                        <span>Gender</span>
+                        <span id="pokemon-gender" class="pokemon-gender"></span>
+                    </div>
+                    
+                    <div>
+                        <span>Egg Groups</span>
+                        <span id="pokemon-egg-groups" class="pokemon-egg-groups"></span>
+                    </div>
+                    
+                    <div>
+                        <span>Egg Cycle</span>
+                        <span id="pokemon-egg-cycle" class="pokemon-egg-cycle"></span>
+                    </div>
+                    
+                </div>
             </div>
             
         </div>
