@@ -4,41 +4,111 @@ body {
 }
 
 h1 {
+    font-size: 42px;
     color: white;
     margin-block-start: unset;
     margin-block-end: unset;
 }
 
+.pokemon-details{
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
 .bg-details {
     background-color: #FC6C6D;
-    height: 50vh;
-
+    height: 40vh;
+    width: 700px;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
 }
 
 .global-info{
     padding-left: 30px;
+    padding-right: 30px;
     padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    
 }
+
 
 .arrow-back{
     width: 32px;
     height: 32px;
     color: white;
+    cursor: pointer;
+    margin-bottom: 50px;
+}
+
+.pokemon-id{
+    color: white;
+    text-align: end;
+}
+
+.pokemon-type{
+    width: 30px;
+    text-align: center;
+    padding: 5px 30px;
+    border-radius: 20px;
+    background-color: #ff9696;
+    color: white;
 }
 
 .bg-details-chart {
     background-color: white;
-    height: calc(50vh + 40px);
+    height: calc(30vh + 40px);
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
     margin-top: -40px;
+    width: 700px;
+}
+
+.pokemon-details-nav{
+    display: flex;
+    justify-content: space-between;
+    
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.pokemon-details-nav button{
+    background-color: white;
+    border: transparent;
+    cursor: pointer;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.10);
+}
+
+.pokemon-details-nav button:hover{
+    border-bottom: 2px solid black;
+    
+}
+
+.buttons-underline{
+    border-bottom: 2px solid rgba(0, 0, 0, 0.10);
+    margin: -2px;
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 .pokemon-sprite{
     display: flex;
     justify-content: center;
+    width: 700px;
+    height: 70px;
 }
 
 .pokemon-sprite img{
-    margin-top: -380px;
+    position: relative;
+    top: -250px;
+    height: 300px;
+}
+
+.d-none{
+    display: none;
 }

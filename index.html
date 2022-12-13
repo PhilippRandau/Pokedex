@@ -8,6 +8,7 @@
     <title>Pokedex</title>
 
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./fonts.css">
 
     <script>
         let currentPokemon;
@@ -20,32 +21,69 @@
             showDetailsPokemon();
         }
 
+
         function showDetailsPokemon() {
             let pokemonName = document.getElementById('pokemon-name');
-            pokemonName.innerHTML = `${currentPokemon['forms'][0]['name']}`;
+            pokemonName.innerHTML = `${charToUpperCase(currentPokemon['forms'][0]['name'])}`;
+
+            let pokemonID = document.getElementById('pokemon-id');
+            pokemonID.innerHTML = `#${pokemonIDFillWithZeros()}`
+
+            let pokemonType = document.getElementById('pokemon-type');
+            pokemonType.innerHTML = `${charToUpperCase(currentPokemon['types'][0]['type']['name'])}`;
 
             let pokemonSprite = document.getElementById('pokemon-sprite')
             pokemonSprite.src = `${currentPokemon['sprites']['other']['official-artwork']['front_default']}`;
         }
+
+
+        function charToUpperCase(text) {
+            let firstCharUpperCase = text.charAt(0).toUpperCase() + text.slice(1);
+            return firstCharUpperCase;
+        }
+
+
+        function pokemonIDFillWithZeros() {
+            if (currentPokemon['id'] > 99) {
+                return (currentPokemon['id'] + "").padStart(1, "0");
+
+            } else if (currentPokemon['id'] > 9) {
+                return (currentPokemon['id'] + "").padStart(2, "0");
+                
+            }else {
+                return (currentPokemon['id'] + "").padStart(3, "0");
+            }
+        }
+
     </script>
 
 </head>
 
 <body onload="loadPokemon()">
-    <section>
+    <section class="pokemon-details">
         <div class="bg-details">
             <div class="global-info">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="arrow-back" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                        d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
-                </svg>
+                <img class="arrow-back" src="./img/arrow_down.ico" alt="">
                 <h1 id="pokemon-name"></h1>
+                <span class="pokemon-id" id="pokemon-id"></span>
+                <span class="pokemon-type" id="pokemon-type"></span>
             </div>
         </div>
         <div class="bg-details-chart">
             <div class="pokemon-sprite">
-                <img id="pokemon-sprite" src="" alt="">
+                <img id="pokemon-sprite" alt="picture of pokemon">
             </div>
+            <nav class="pokemon-details-nav">
+                <button>About</button>
+                <button>Base Stats</button>
+                <button>Evolution</button>
+                <button>Moves</button>
+            </nav>
+            <div class="buttons-underline"></div>
+            <div id="pokemon-details-content" class="pokemon-details-content">
+                
+            </div>
+            
         </div>
     </section>
 
