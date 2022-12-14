@@ -12,7 +12,7 @@
 
     <script>
         let currentPokemon;
-        
+
 
         async function loadPokemon() {
             let url = `https://pokeapi.co/api/v2/pokemon/charmander`;
@@ -21,7 +21,7 @@
             showDetailsPokemon();
         }
 
-        
+
 
 
         function showDetailsPokemon() {
@@ -39,6 +39,11 @@
 
             //add later to onclick on pokemon in overview
             loadPokemonSpecies();
+
+            //add later to onclick About button
+            showPokemonHeight();
+            showPokemonWeight();
+            showPokemonAbilities();
         }
 
 
@@ -54,42 +59,122 @@
 
             } else if (currentPokemon['id'] > 9) {
                 return (currentPokemon['id'] + "").padStart(2, "0");
-                
-            }else {
+
+            } else {
                 return (currentPokemon['id'] + "").padStart(3, "0");
             }
         }
 
-        async function loadPokemonSpecies(){
+        async function loadPokemonSpecies() {
             let url = `${currentPokemon['species']['url']}`;
             let response = await fetch(url);
             let currentPokemonSpecies = await response.json();
+
             showPokemonSpecies(currentPokemonSpecies);
+            showPokemonEggGroups(currentPokemonSpecies);
+            showPokemonGender(currentPokemonSpecies);
+            pokemonEggCycle(currentPokemonSpecies);
         }
 
-        function showPokemonSpecies(currentPokemonSpecies){
+
+        function showPokemonSpecies(currentPokemonSpecies) {
             let pokemonSpecies = document.getElementById('pokemon-species');
             let modifiedSpeciesName = currentPokemonSpecies['genera'][7]['genus'].split(' ')
             pokemonSpecies.innerHTML = `${modifiedSpeciesName[0]}`;
         }
 
-            // let pokemonHeight = document.getElementById('pokemon-height');
-            // pokemonHeight.innerHTML = `${}`;
 
-            // let pokemonWeight = document.getElementById('pokemon-weight');
-            // pokemonWeight.innerHTML = `${}`;
+        function showPokemonHeight() {
+            let pokemonHeight = document.getElementById('pokemon-height');
+            pokemonHeight.innerHTML = `${currentPokemon['height'] / 10}m`;
+        }
 
-            // let pokemonAbilities = document.getElementById('pokemon-abilities');
-            // pokemonAbilities.innerHTML = `${}`;
 
-            // let pokemonGender = document.getElementById('pokemon-gender');
-            // pokemonGender.innerHTML = `${}`;
+        function showPokemonWeight() {
+            let pokemonWeight = document.getElementById('pokemon-weight');
+            pokemonWeight.innerHTML = `${currentPokemon['weight'] / 10}kg`;
+        }
 
-            // let pokemonEggGroups = document.getElementById('pokemon-egg-groups');
-            // pokemonEggGroups.innerHTML = `${}`;
-            
-            // let pokemonEggCycle = document.getElementById('pokemon-egg-cycle');
-            // pokemonEggCycle.innerHTML = `${}`;
+
+        function showPokemonAbilities() {
+            let pokemonAbilities = document.getElementById('pokemon-abilities');
+            pokemonAbilities.innerHTML = '';
+            for (let i = 0; i < currentPokemon['abilities'].length; i++) {
+                const ability = currentPokemon['abilities'][i]['ability']['name'];
+                pokemonAbilities.innerHTML += `${ability}`;
+
+                abilitiesSpacing(i, pokemonAbilities);
+            }
+        }
+
+
+        function abilitiesSpacing(i, pokemonAbilities) {
+            if (i < currentPokemon['abilities'].length - 1) { pokemonAbilities.innerHTML += ', ' }
+        }
+
+
+        function showPokemonGender(currentPokemonSpecies) {
+            let pokemonGender = document.getElementById('pokemon-gender');
+            pokemonGenderRates(pokemonGender, currentPokemonSpecies);
+        }
+
+
+        function pokemonGenderRates(pokemonGender, currentPokemonSpecies) {
+            switch (currentPokemonSpecies['gender_rate']) {
+                case 1:
+                //7:1 87,5%:12,5%
+                pokemonGender.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="gender-male" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M9.5 2a.5.5 0 0 1 0-1h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.707L9.871 6.836a5 5 0 1 1-.707-.707L13.293 2H9.5zM6 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
+                </svg>
+                87,5%
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="gender-female" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5z"/>
+                </svg>
+                12,5% 
+                `;
+                    break;
+                case 2:
+                pokemonGender.innerHTML = `unknown2 change it`;
+                    break;
+
+                case 3:
+                pokemonGender.innerHTML = `unknown3 change it`;
+                    break;
+
+                case 4:
+                //1:1 50%:50%
+                    break;
+
+
+                default:
+                    break;
+            }
+        }
+
+
+        function showPokemonEggGroups(currentPokemonSpecies) {
+            let pokemonEggGroups = document.getElementById('pokemon-egg-groups');
+            for (let i = 0; i < currentPokemonSpecies['egg_groups'].length; i++) {
+                const egg_group = currentPokemonSpecies['egg_groups'][i]['name'];
+                pokemonEggGroups.innerHTML += `${egg_group}`;
+
+                eggGroupsSpacing(i, pokemonEggGroups, currentPokemonSpecies);
+            }
+        }
+
+
+        function eggGroupsSpacing(i, pokemonEggGroups, currentPokemonSpecies) {
+            if (i < currentPokemonSpecies['egg_groups'].length - 1) { pokemonEggGroups.innerHTML += ', ' }
+        }
+
+
+        function pokemonEggCycle(currentPokemonSpecies) {
+            //other name for egg cycle is hatch counter
+            let pokemonEggCycle = document.getElementById('pokemon-egg-cycle');
+            pokemonEggCycle.innerHTML = `${currentPokemonSpecies['hatch_counter']}`;
+        }
+
 
     </script>
 
@@ -117,46 +202,47 @@
             </nav>
             <div class="buttons-underline"></div>
             <div id="pokemon-details-content" class="pokemon-details-content">
-                <div class="pokemon-details-about">
-                    <div>
-                        <span>Species</span>
-                        <span id="pokemon-species" class="pokemon-species">s</span>
-                    </div>
-                    
-                    <div>
-                        <span>Height</span>
-                        <span id="pokemon-height" class="pokemon-height"></span>
-                    </div>
-                    
-                    <div>
-                        <span>Weight</span>
-                        <span id="pokemon-weight" class="pokemon-weight"></span>
-                    </div>
-                    
-                    <div>
-                        <span>Abilities</span>
-                        <span id="pokemon-abilities" class="pokemon-abilities"></span>
-                    </div>
-                    
-                    <h3>Breeding</h3>
-                    <div>
-                        <span>Gender</span>
-                        <span id="pokemon-gender" class="pokemon-gender"></span>
-                    </div>
-                    
-                    <div>
-                        <span>Egg Groups</span>
-                        <span id="pokemon-egg-groups" class="pokemon-egg-groups"></span>
-                    </div>
-                    
-                    <div>
-                        <span>Egg Cycle</span>
-                        <span id="pokemon-egg-cycle" class="pokemon-egg-cycle"></span>
-                    </div>
-                    
-                </div>
+                <table class="pokemon-details-about">
+                    <tr>
+                        <td>Species</td>
+                        <td id="pokemon-species" class="pokemon-species"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Height</td>
+                        <td id="pokemon-height" class="pokemon-height"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Weight</td>
+                        <td id="pokemon-weight" class="pokemon-weight"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Abilities</td>
+                        <td id="pokemon-abilities" class="pokemon-abilities"></td>
+                    </tr>
+                    <tr>
+                        <td><h3>Breeding</h3></td>
+                    </tr>
+                    <tr>
+                        <td>Gender</td>
+                        <td id="pokemon-gender" class="pokemon-gender"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Egg Groups</td>
+                        <td id="pokemon-egg-groups" class="pokemon-egg-groups"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Egg Cycle</td>
+                        <td id="pokemon-egg-cycle" class="pokemon-egg-cycle"></td>
+                    </tr>
+
+                </table>
             </div>
-            
+
         </div>
     </section>
 
