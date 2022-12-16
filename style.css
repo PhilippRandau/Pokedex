@@ -14,6 +14,8 @@ h1 {
 h3 {
     margin-block-start: 5px;
     margin-block-end: 5px;
+    font-weight: 700;
+    color: black;
 }
 
 .pokemon-details {
@@ -48,7 +50,7 @@ h3 {
     height: 32px;
     color: white;
     cursor: pointer;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 .pokemon-id {
@@ -83,9 +85,6 @@ h3 {
 .bg-details-chart {
     background-color: white;
     min-height: 540px;
-    /* height: calc(30vh + 40px); */
-    /* border-top-left-radius: 40px;
-    border-top-right-radius: 40px; */
     border-radius: 40px;
     margin-top: -40px;
     width: 580px;
@@ -104,6 +103,10 @@ h3 {
     cursor: pointer;
     padding-bottom: 15px;
     border-bottom: 2px solid rgba(0, 0, 0, 0.10);
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    color: rgba(0, 0, 0, 0.3);
+    font-weight: 700;
 }
 
 .pokemon-details-nav button:hover {
@@ -118,16 +121,26 @@ h3 {
     margin-right: 50px;
 }
 
-
-.pokemon-details-about {
+.pokemon-details-content {
     margin-left: 50px;
     margin-top: 20px;
+    font-size: 14px;
+}
+
+/* ------------------------About Section-------------------- */
+.pokemon-details-about {
     text-align: left;
     width: 100%;
 }
 
-.pokemon-details-about td:nth-child(odd) {
+.pokemon-details-about td:first-child {
     width: 150px;
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: 700;
+}
+
+.pokemon-details-about td:nth-child(2) {
+    font-weight: 500;
 }
 
 .gender-male {
@@ -143,16 +156,74 @@ h3 {
     margin-left: 20px;
 }
 
+td {
+    padding-bottom: 20px;
+}
+
+/* --------------------Base Stats Section--------------------------- */
+
+.pokemon-details-basestats {}
+
+.text-defenses {
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: 700;
+}
+
+.pokemon-details-basestats td:first-child {
+    width: 150px;
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: 700;
+}
+
+.pokemon-details-basestats td:nth-child(3) {
+    display: flex;
+    align-items: center;
+    height: 20px;
+}
+
+.stats-progressbar {
+    height: 10px;
+    border-radius: 7px;
+    width: 200px;
+    margin-left: 75px;
+    /* box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2); */
+}
+
+.stats-progressbar::-webkit-progress-bar {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 7px;
+}
+
+.stats-progressbar::-webkit-progress-value {
+    background-color: red;
+    border-radius: 7px;
+    /* box-shadow: 1px 1px 5px 3px rgba(255, 0, 0, 0.8); */
+}
+
+.stats-progressbar::-moz-progress-bar {
+    /* style rules */
+}
+
+.type-gif{
+    position: absolute;
+    /* background-color: rgba(0, 0, 0, 0.112); */
+    width: 200px;
+    margin-left: 75px;
+}
+.type-gif img{
+    position: relative;
+    /* top: -7px; */
+    height: 18px;
+}
+
+
+
+
+
+
+
+
+
 .d-none {
     display: none;
 }
-
-td{
-    /* border: transparent 1px solid; */
-    padding-bottom: 20px;
-}
-/* table,
-th,
-td {
-    border: 1px solid black;
-} */

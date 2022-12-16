@@ -11,17 +11,33 @@
     <link rel="stylesheet" href="./fonts.css">
 
     <script>
+        let currentPokemonName = 'charmander';
         let currentPokemon;
-
+        let currentPokemonSpecies;
+        let currentPokemonEvolution;
+        
 
         async function loadPokemon() {
-            let url = `https://pokeapi.co/api/v2/pokemon/charmander`;
+            let url = `https://pokeapi.co/api/v2/pokemon/${currentPokemonName}`;
             let response = await fetch(url);
             currentPokemon = await response.json();
+            await loadPokemonSpecies();
+            await loadPokemonEvolution();
+
             showDetailsPokemon();
         }
 
+        async function loadPokemonSpecies() {
+            let url = `${currentPokemon['species']['url']}`;
+            let response = await fetch(url);
+            currentPokemonSpecies = await response.json();
+        }
 
+        async function loadPokemonEvolution() {
+            let url = `${currentPokemonSpecies['evolution_chain']['url']}`;
+            let response = await fetch(url);
+            currentPokemonEvolution = await response.json();
+        }
 
 
         function showDetailsPokemon() {
@@ -36,14 +52,8 @@
 
             let pokemonSprite = document.getElementById('pokemon-sprite')
             pokemonSprite.src = `${currentPokemon['sprites']['other']['official-artwork']['front_default']}`;
-
-            //add later to onclick on pokemon in overview
-            loadPokemonSpecies();
-
-            //add later to onclick About button
-            showPokemonHeight();
-            showPokemonWeight();
-            showPokemonAbilities();
+            //show standard about stats
+            loadAbout();
         }
 
 
@@ -65,119 +75,74 @@
             }
         }
 
-        async function loadPokemonSpecies() {
-            let url = `${currentPokemon['species']['url']}`;
-            let response = await fetch(url);
-            let currentPokemonSpecies = await response.json();
 
-            showPokemonSpecies(currentPokemonSpecies);
-            showPokemonEggGroups(currentPokemonSpecies);
-            showPokemonGender(currentPokemonSpecies);
-            pokemonEggCycle(currentPokemonSpecies);
+        function unloadAllStats(){
+            document.getElementById('pokemon-details-about').classList.add('d-none');
+            document.getElementById('pokemon-details-basestats').classList.add('d-none');
+            document.getElementById('pokemon-details-evolution').classList.add('d-none');
+            document.getElementById('pokemon-details-moves').classList.add('d-none');
         }
 
 
-        function showPokemonSpecies(currentPokemonSpecies) {
-            let pokemonSpecies = document.getElementById('pokemon-species');
-            let modifiedSpeciesName = currentPokemonSpecies['genera'][7]['genus'].split(' ')
-            pokemonSpecies.innerHTML = `${modifiedSpeciesName[0]}`;
+        function loadBaseStats(){
+            buttonStyleDeAct();
+            buttonStyleAct('stats-button1');
+            unloadAllStats();
+            showPokemonStats();
+            document.getElementById('pokemon-details-basestats').classList.remove('d-none');
         }
 
-
-        function showPokemonHeight() {
-            let pokemonHeight = document.getElementById('pokemon-height');
-            pokemonHeight.innerHTML = `${currentPokemon['height'] / 10}m`;
-        }
-
-
-        function showPokemonWeight() {
-            let pokemonWeight = document.getElementById('pokemon-weight');
-            pokemonWeight.innerHTML = `${currentPokemon['weight'] / 10}kg`;
-        }
-
-
-        function showPokemonAbilities() {
-            let pokemonAbilities = document.getElementById('pokemon-abilities');
-            pokemonAbilities.innerHTML = '';
-            for (let i = 0; i < currentPokemon['abilities'].length; i++) {
-                const ability = currentPokemon['abilities'][i]['ability']['name'];
-                pokemonAbilities.innerHTML += `${ability}`;
-
-                abilitiesSpacing(i, pokemonAbilities);
+        function showPokemonStats(){
+            let totalStatPoints = 0;
+            for (let i = 0; i < currentPokemon['stats'].length; i++) {
+                let pokemonStat = document.getElementById(`pokemon-stat${i}`);
+                pokemonStat.innerHTML = `${currentPokemon['stats'][i]['base_stat']}`
+                totalStatPoints += currentPokemon['stats'][i]['base_stat'];
+                showPokemonStatsPb(i);
+                showPokemonStatsTypeAnimation(i);
             }
+            let pokemonStatTotal = document.getElementById('pokemon-stat-total');
+
+            pokemonStatTotal.innerHTML = `${totalStatPoints}`;
+             
+            document.getElementById(`type-gif-total`).innerHTML += `<div class="type-gif"><img style="left:calc(${totalStatPoints/10}% - 9px)" src="./img/fire.gif" alt=""></div>`;
+            showPokemonTotalStatsPb(totalStatPoints);
+        }
+
+        function showPokemonStatsPb(i){
+            PokemonStatPb = document.getElementById(`pokemon-stat${i}-pb`);
+            PokemonStatPb.value = `${currentPokemon['stats'][i]['base_stat']}`;
+            PokemonStatPb.max = 100;
+            
+        }
+
+        function showPokemonTotalStatsPb(totalStatPoints){
+            pokemonTotalStatPb = document.getElementById(`pokemon-stat-total-pb`);
+            pokemonTotalStatPb.value = `${totalStatPoints}`;
+            pokemonTotalStatPb.max = 1000;
+            
+        }
+
+        function showPokemonStatsTypeAnimation(i){
+            document.getElementById(`type-gif${i}`).innerHTML += `<div class="type-gif"><img style="left:calc(${currentPokemon['stats'][i]['base_stat']}% - 9px)" src="./img/fire.gif" alt=""></div>`;
         }
 
 
-        function abilitiesSpacing(i, pokemonAbilities) {
-            if (i < currentPokemon['abilities'].length - 1) { pokemonAbilities.innerHTML += ', ' }
+        function loadEvolution(){
+            buttonStyleDeAct();
+            buttonStyleAct('stats-button2');
+            unloadAllStats();
         }
 
 
-        function showPokemonGender(currentPokemonSpecies) {
-            let pokemonGender = document.getElementById('pokemon-gender');
-            pokemonGenderRates(pokemonGender, currentPokemonSpecies);
+        function loadMoves(){
+            buttonStyleDeAct();
+            buttonStyleAct('stats-button3');
+            unloadAllStats();
         }
 
-
-        function pokemonGenderRates(pokemonGender, currentPokemonSpecies) {
-            switch (currentPokemonSpecies['gender_rate']) {
-                case 1:
-                //7:1 87,5%:12,5%
-                pokemonGender.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="gender-male" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M9.5 2a.5.5 0 0 1 0-1h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.707L9.871 6.836a5 5 0 1 1-.707-.707L13.293 2H9.5zM6 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
-                </svg>
-                87,5%
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="gender-female" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5z"/>
-                </svg>
-                12,5% 
-                `;
-                    break;
-                case 2:
-                pokemonGender.innerHTML = `unknown2 change it`;
-                    break;
-
-                case 3:
-                pokemonGender.innerHTML = `unknown3 change it`;
-                    break;
-
-                case 4:
-                //1:1 50%:50%
-                    break;
-
-
-                default:
-                    break;
-            }
-        }
-
-
-        function showPokemonEggGroups(currentPokemonSpecies) {
-            let pokemonEggGroups = document.getElementById('pokemon-egg-groups');
-            for (let i = 0; i < currentPokemonSpecies['egg_groups'].length; i++) {
-                const egg_group = currentPokemonSpecies['egg_groups'][i]['name'];
-                pokemonEggGroups.innerHTML += `${egg_group}`;
-
-                eggGroupsSpacing(i, pokemonEggGroups, currentPokemonSpecies);
-            }
-        }
-
-
-        function eggGroupsSpacing(i, pokemonEggGroups, currentPokemonSpecies) {
-            if (i < currentPokemonSpecies['egg_groups'].length - 1) { pokemonEggGroups.innerHTML += ', ' }
-        }
-
-
-        function pokemonEggCycle(currentPokemonSpecies) {
-            //other name for egg cycle is hatch counter
-            let pokemonEggCycle = document.getElementById('pokemon-egg-cycle');
-            pokemonEggCycle.innerHTML = `${currentPokemonSpecies['hatch_counter']}`;
-        }
-
-
+        
     </script>
-
 </head>
 
 <body onload="loadPokemon()">
@@ -195,57 +160,214 @@
                 <img id="pokemon-sprite" alt="picture of pokemon">
             </div>
             <nav class="pokemon-details-nav">
-                <button>About</button>
-                <button>Base Stats</button>
-                <button>Evolution</button>
-                <button>Moves</button>
+                <button onclick="loadAbout()" id="stats-button0">About</button>
+                <button onclick="loadBaseStats()" id="stats-button1">Base Stats</button>
+                <button onclick="loadEvolution()" id="stats-button2">Evolution</button>
+                <button onclick="loadMoves()" id="stats-button3">Moves</button>
             </nav>
             <div class="buttons-underline"></div>
             <div id="pokemon-details-content" class="pokemon-details-content">
-                <table class="pokemon-details-about">
-                    <tr>
-                        <td>Species</td>
-                        <td id="pokemon-species" class="pokemon-species"></td>
-                    </tr>
+                <!-- About -->
+                <div id="pokemon-details-about" class="pokemon-details-about">
+                    <table>
+                        <tr>
+                            <td>Species</td>
+                            <td id="pokemon-species" class="pokemon-species"></td>
+                        </tr>
 
-                    <tr>
-                        <td>Height</td>
-                        <td id="pokemon-height" class="pokemon-height"></td>
-                    </tr>
+                        <tr>
+                            <td>Height</td>
+                            <td id="pokemon-height" class="pokemon-height"></td>
+                        </tr>
 
-                    <tr>
-                        <td>Weight</td>
-                        <td id="pokemon-weight" class="pokemon-weight"></td>
-                    </tr>
+                        <tr>
+                            <td>Weight</td>
+                            <td id="pokemon-weight" class="pokemon-weight"></td>
+                        </tr>
 
-                    <tr>
-                        <td>Abilities</td>
-                        <td id="pokemon-abilities" class="pokemon-abilities"></td>
-                    </tr>
-                    <tr>
-                        <td><h3>Breeding</h3></td>
-                    </tr>
-                    <tr>
-                        <td>Gender</td>
-                        <td id="pokemon-gender" class="pokemon-gender"></td>
-                    </tr>
+                        <tr>
+                            <td>Abilities</td>
+                            <td id="pokemon-abilities" class="pokemon-abilities"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h3>Breeding</h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Gender</td>
+                            <td id="pokemon-gender" class="pokemon-gender"></td>
+                        </tr>
 
-                    <tr>
-                        <td>Egg Groups</td>
-                        <td id="pokemon-egg-groups" class="pokemon-egg-groups"></td>
-                    </tr>
+                        <tr>
+                            <td>Egg Groups</td>
+                            <td id="pokemon-egg-groups" class="pokemon-egg-groups"></td>
+                        </tr>
 
-                    <tr>
-                        <td>Egg Cycle</td>
-                        <td id="pokemon-egg-cycle" class="pokemon-egg-cycle"></td>
-                    </tr>
+                        <tr>
+                            <td>Egg Cycle</td>
+                            <td id="pokemon-egg-cycle" class="pokemon-egg-cycle"></td>
+                        </tr>
+                    </table>
+                </div>
 
-                </table>
+                <!-- Base Stats -->
+                <div id="pokemon-details-basestats" class="pokemon-details-basestats d-none">
+                    <table >
+                        <tr>
+                            <td>HP</td>
+                            <td id="pokemon-stat0" class="pokemon-hp"></td>
+                            <td id="type-gif0"><progress id="pokemon-stat0-pb" class="stats-progressbar"></progress></td>
+                        </tr>
+
+                        <tr>
+                            <td>Attack</td>
+                            <td id="pokemon-stat1" class="pokemon-attack"></td>
+                            <td id="type-gif1"><progress id="pokemon-stat1-pb" class="stats-progressbar"></progress></td>
+                        </tr>
+
+                        <tr>
+                            <td>Defence</td>
+                            <td id="pokemon-stat2" class="pokemon-defense"></td>
+                            <td id="type-gif2"><progress id="pokemon-stat2-pb" class="stats-progressbar"></progress></td>
+                        </tr>
+
+                        <tr>
+                            <td>Sp. Atk</td>
+                            <td id="pokemon-stat3" class="pokemon-spatk"></td>
+                            <td id="type-gif3"><progress id="pokemon-stat3-pb" class="stats-progressbar"></progress></td>
+                        </tr>
+
+                        <tr>
+                            <td>Sp. Def</td>
+                            <td id="pokemon-stat4" class="pokemon-spdef"></td>
+                            <td id="type-gif4"><progress id="pokemon-stat4-pb" class="stats-progressbar"></progress></td>
+                        </tr>
+
+                        <tr>
+                            <td>Speed</td>
+                            <td id="pokemon-stat5" class="pokemon-speed"></td>
+                            <td id="type-gif5"><progress id="pokemon-stat5-pb" class="stats-progressbar"></progress></td>
+                        </tr>
+
+                        <tr>
+                            <td>Total</td>
+                            <td id="pokemon-stat-total" class="pokemon-total"></td>
+                            <td id="type-gif-total"><progress id="pokemon-stat-total-pb" class="stats-progressbar"></progress></td>
+                        </tr>
+                        
+                    </table>
+                    <h3>Type defenses</h3>
+                    <span class="text-defenses">??? effectiveness ???</span>
+                </div>
+
+                <!-- Evolution -->
+                <div id="pokemon-details-evolution" class="pokemon-details-evolution d-none">
+                    <!-- <table >
+                        <tr>
+                            <td>HP</td>
+                            <td id="pokemon-hp" class="pokemon-hp"></td>
+                            <td id="pokemon-hp-pb" class="pokemon-hp-pb"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Attack</td>
+                            <td id="pokemon-attack" class="pokemon-attack"></td>
+                            <td id="pokemon-attack-pb" class="pokemon-attack-pb"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Defence</td>
+                            <td id="pokemon-defense" class="pokemon-defense"></td>
+                            <td id="pokemon-defense-pb" class="pokemon-defense-pb"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Sp. Atk</td>
+                            <td id="pokemon-spatk" class="pokemon-spatk"></td>
+                            <td id="pokemon-spatk-pb" class="pokemon-spatk-pb"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Sp. Def</td>
+                            <td id="pokemon-spdef" class="pokemon-spdef"></td>
+                            <td id="pokemon-spdef-pb" class="pokemon-spdef-pb"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Speed</td>
+                            <td id="pokemon-speed" class="pokemon-speed"></td>
+                            <td id="pokemon-speed-pb" class="pokemon-speed-pb"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Total</td>
+                            <td id="pokemon-total" class="pokemon-total"></td>
+                            <td id="pokemon-total-pb" class="pokemon-total-pb"></td>
+                        </tr>
+
+                    </table> -->
+                    <h3>Type defenses</h3>
+                    <span class="text-defenses">??? effectiveness ???</span>
+                </div>
+
+                <!-- Moves -->
+                <div id="pokemon-details-moves" class="pokemon-details-moves d-none">
+                    <!-- <table >
+                        <tr>
+                            <td>HP</td>
+                            <td id="pokemon-hp" class="pokemon-hp"></td>
+                            <td id="pokemon-hp-pb" class="pokemon-hp-pb"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Attack</td>
+                            <td id="pokemon-attack" class="pokemon-attack"></td>
+                            <td id="pokemon-attack-pb" class="pokemon-attack-pb"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Defence</td>
+                            <td id="pokemon-defense" class="pokemon-defense"></td>
+                            <td id="pokemon-defense-pb" class="pokemon-defense-pb"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Sp. Atk</td>
+                            <td id="pokemon-spatk" class="pokemon-spatk"></td>
+                            <td id="pokemon-spatk-pb" class="pokemon-spatk-pb"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Sp. Def</td>
+                            <td id="pokemon-spdef" class="pokemon-spdef"></td>
+                            <td id="pokemon-spdef-pb" class="pokemon-spdef-pb"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Speed</td>
+                            <td id="pokemon-speed" class="pokemon-speed"></td>
+                            <td id="pokemon-speed-pb" class="pokemon-speed-pb"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Total</td>
+                            <td id="pokemon-total" class="pokemon-total"></td>
+                            <td id="pokemon-total-pb" class="pokemon-total-pb"></td>
+                        </tr>
+
+                    </table> -->
+                    <h3>Type defenses</h3>
+                    <span class="text-defenses">??? effectiveness ???</span>
+                </div>
+
             </div>
 
         </div>
     </section>
 
+    <!--------------- Load Script Templates -------------------->
+    <script src="./templates/poke-about.js"></script>
 
 </body>
 
