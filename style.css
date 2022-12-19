@@ -61,7 +61,7 @@ h3 {
 }
 
 .pokemon-type {
-    width: 30px;
+    width: 60px;
     text-align: center;
     padding: 5px 30px;
     border-radius: 20px;
@@ -123,8 +123,10 @@ h3 {
 
 .pokemon-details-content {
     margin-left: 50px;
+    margin-right: 50px;
     margin-top: 20px;
     font-size: 14px;
+    
 }
 
 /* ------------------------About Section-------------------- */
@@ -162,8 +164,6 @@ td {
 
 /* --------------------Base Stats Section--------------------------- */
 
-.pokemon-details-basestats {}
-
 .text-defenses {
     color: rgba(0, 0, 0, 0.5);
     font-weight: 700;
@@ -197,7 +197,6 @@ td {
 .stats-progressbar::-webkit-progress-value {
     background-color: red;
     border-radius: 7px;
-    /* box-shadow: 1px 1px 5px 3px rgba(255, 0, 0, 0.8); */
 }
 
 .stats-progressbar::-moz-progress-bar {
@@ -217,8 +216,47 @@ td {
 }
 
 
+/* --------------------Evolution--------------------------- */
+.pokemon-details-evolution{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 400px;
+    background-image: url(./img/background_evolution.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: white;
+}
 
+.evolution-shell{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+}
 
+.evolution-border{
+    border: 5px solid #ff9696;
+    border-radius: 20px;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.evolution-names{
+    display: flex;
+    justify-content: space-between;
+}
+
+.evolution-names span{
+    width: 110px;
+    text-align: center;
+}
 
 
 

@@ -11,11 +11,12 @@
     <link rel="stylesheet" href="./fonts.css">
 
     <script>
-        let currentPokemonName = 'charmander';
+        let currentPokemonName = '4';
         let currentPokemon;
         let currentPokemonSpecies;
         let currentPokemonEvolution;
-        
+        let evolutionSpeciesBasePokemon;
+
 
         async function loadPokemon() {
             let url = `https://pokeapi.co/api/v2/pokemon/${currentPokemonName}`;
@@ -27,11 +28,13 @@
             showDetailsPokemon();
         }
 
+
         async function loadPokemonSpecies() {
             let url = `${currentPokemon['species']['url']}`;
             let response = await fetch(url);
             currentPokemonSpecies = await response.json();
         }
+
 
         async function loadPokemonEvolution() {
             let url = `${currentPokemonSpecies['evolution_chain']['url']}`;
@@ -45,7 +48,7 @@
             pokemonName.innerHTML = `${charToUpperCase(currentPokemon['forms'][0]['name'])}`;
 
             let pokemonID = document.getElementById('pokemon-id');
-            pokemonID.innerHTML = `#${pokemonIDFillWithZeros()}`
+            pokemonID.innerHTML = `#${pokemonIDFillWithZeros(currentPokemon)}`
 
             let pokemonType = document.getElementById('pokemon-type');
             pokemonType.innerHTML = `${charToUpperCase(currentPokemon['types'][0]['type']['name'])}`;
@@ -63,20 +66,20 @@
         }
 
 
-        function pokemonIDFillWithZeros() {
-            if (currentPokemon['id'] > 99) {
-                return (currentPokemon['id'] + "").padStart(1, "0");
+        function pokemonIDFillWithZeros(pokemonID) {
+            if (pokemonID['id'] > 99) {
+                return (pokemonID['id'] + "").padStart(1, "0");
 
             } else if (currentPokemon['id'] > 9) {
-                return (currentPokemon['id'] + "").padStart(2, "0");
+                return (pokemonID['id'] + "").padStart(2, "0");
 
             } else {
-                return (currentPokemon['id'] + "").padStart(3, "0");
+                return (pokemonID['id'] + "").padStart(3, "0");
             }
         }
 
 
-        function unloadAllStats(){
+        function unloadAllStats() {
             document.getElementById('pokemon-details-about').classList.add('d-none');
             document.getElementById('pokemon-details-basestats').classList.add('d-none');
             document.getElementById('pokemon-details-evolution').classList.add('d-none');
@@ -84,7 +87,7 @@
         }
 
 
-        function loadBaseStats(){
+        function loadBaseStats() {
             buttonStyleDeAct();
             buttonStyleAct('stats-button1');
             unloadAllStats();
@@ -92,7 +95,7 @@
             document.getElementById('pokemon-details-basestats').classList.remove('d-none');
         }
 
-        function showPokemonStats(){
+        function showPokemonStats() {
             let totalStatPoints = 0;
             for (let i = 0; i < currentPokemon['stats'].length; i++) {
                 let pokemonStat = document.getElementById(`pokemon-stat${i}`);
@@ -104,44 +107,104 @@
             let pokemonStatTotal = document.getElementById('pokemon-stat-total');
 
             pokemonStatTotal.innerHTML = `${totalStatPoints}`;
-             
-            document.getElementById(`type-gif-total`).innerHTML += `<div class="type-gif"><img style="left:calc(${totalStatPoints/10}% - 9px)" src="./img/fire.gif" alt=""></div>`;
+
+            document.getElementById(`type-gif-total`).innerHTML += `<div class="type-gif"><img style="left:calc(${totalStatPoints / 10}% - 9px)" src="./img/fire.gif" alt=""></div>`;
             showPokemonTotalStatsPb(totalStatPoints);
         }
 
-        function showPokemonStatsPb(i){
+        function showPokemonStatsPb(i) {
             PokemonStatPb = document.getElementById(`pokemon-stat${i}-pb`);
             PokemonStatPb.value = `${currentPokemon['stats'][i]['base_stat']}`;
             PokemonStatPb.max = 100;
-            
+
         }
 
-        function showPokemonTotalStatsPb(totalStatPoints){
+        function showPokemonTotalStatsPb(totalStatPoints) {
             pokemonTotalStatPb = document.getElementById(`pokemon-stat-total-pb`);
             pokemonTotalStatPb.value = `${totalStatPoints}`;
             pokemonTotalStatPb.max = 1000;
-            
+
         }
 
-        function showPokemonStatsTypeAnimation(i){
+        function showPokemonStatsTypeAnimation(i) {
             document.getElementById(`type-gif${i}`).innerHTML += `<div class="type-gif"><img style="left:calc(${currentPokemon['stats'][i]['base_stat']}% - 9px)" src="./img/fire.gif" alt=""></div>`;
         }
 
 
-        function loadEvolution(){
+        function loadEvolution() {
             buttonStyleDeAct();
             buttonStyleAct('stats-button2');
             unloadAllStats();
+            document.getElementById('pokemon-details-evolution').classList.remove('d-none');
+            showEvolution();
         }
 
 
-        function loadMoves(){
+        function showEvolution() {
+            evolutionSpeciesBase();
+            evolutionSpecies1();
+            evolutionSpecies2();
+        }
+
+        async function evolutionSpeciesBase() {
+            let evolutionBaseName = document.getElementById('evolution-base-name');
+            evolutionBaseName.innerHTML = `${charToUpperCase(currentPokemonEvolution['chain']['species']['name'])}`;
+            let url = `https://pokeapi.co/api/v2/pokemon/${currentPokemonEvolution['chain']['species']['name']}`;
+            let response = await fetch(url);
+            evolutionSpeciesBasePokemon = await response.json();
+            evolutionBaseName.innerHTML += `<br> #${pokemonIDFillWithZeros(evolutionSpeciesBasePokemon)}`;
+            document.getElementById('evolution-base').src = `${evolutionSpeciesBasePokemon['sprites']['versions']['generation-v']['black-white']['animated']['front_default']}`;
+        }
+
+
+        async function evolutionSpecies1() {
+            let evolution1Name = document.getElementById('evolution-1-name');
+            evolution1Name.innerHTML = `${charToUpperCase(currentPokemonEvolution['chain']['evolves_to'][0]['species']['name'])}`;
+            let url = `https://pokeapi.co/api/v2/pokemon/${currentPokemonEvolution['chain']['evolves_to'][0]['species']['name']}`;
+            let response = await fetch(url);
+            let evolutionSpecies1Pokemon = await response.json();
+            evolution1Name.innerHTML += `<br> #${pokemonIDFillWithZeros(evolutionSpecies1Pokemon)}`;
+            document.getElementById('evolution-1').src = `${evolutionSpecies1Pokemon['sprites']['versions']['generation-v']['black-white']['animated']['front_default']}`;
+        }
+
+
+        async function evolutionSpecies2() {
+            let evolution2Name = document.getElementById('evolution-2-name');
+            try {
+                
+                evolution2Name.innerHTML = `${charToUpperCase(currentPokemonEvolution['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'])}`
+                let url = `https://pokeapi.co/api/v2/pokemon/${currentPokemonEvolution['chain']['evolves_to'][0]['evolves_to'][0]['species']['name']}`;
+                let response = await fetch(url);
+                let evolutionSpecies2Pokemon = await response.json();
+                evolution2Name.innerHTML += `<br> #${pokemonIDFillWithZeros(evolutionSpecies2Pokemon)}`;
+                document.getElementById('evolution-2').src = `${evolutionSpecies2Pokemon['sprites']['versions']['generation-v']['black-white']['animated']['front_default']}`;
+            } catch (error) {
+                document.getElementById('evolution-2').src = `./img/slash-circle.svg`;
+                evolution2Name.innerHTML = 'no evolution';
+            }
+        }
+
+
+
+
+
+        function loadMoves() {
             buttonStyleDeAct();
             buttonStyleAct('stats-button3');
             unloadAllStats();
+            showPokemonMoves();
         }
 
-        
+        function showPokemonMoves(){
+           let pokemonMoves = document.getElementById('pokemon-details-moves');
+           console.log('test');
+           for (let i = 0; i < currentPokemon['moves'].length; i++) {
+            const moveAbility = currentPokemon['moves'][i]['move']['name'];
+            pokemonMoves.innerHTML += `<div>${moveAbility}</div>`;
+            console.log(moveAbility);
+           }
+        }
+
     </script>
 </head>
 
@@ -213,49 +276,56 @@
 
                 <!-- Base Stats -->
                 <div id="pokemon-details-basestats" class="pokemon-details-basestats d-none">
-                    <table >
+                    <table>
                         <tr>
                             <td>HP</td>
                             <td id="pokemon-stat0" class="pokemon-hp"></td>
-                            <td id="type-gif0"><progress id="pokemon-stat0-pb" class="stats-progressbar"></progress></td>
+                            <td id="type-gif0"><progress id="pokemon-stat0-pb" class="stats-progressbar"></progress>
+                            </td>
                         </tr>
 
                         <tr>
                             <td>Attack</td>
                             <td id="pokemon-stat1" class="pokemon-attack"></td>
-                            <td id="type-gif1"><progress id="pokemon-stat1-pb" class="stats-progressbar"></progress></td>
+                            <td id="type-gif1"><progress id="pokemon-stat1-pb" class="stats-progressbar"></progress>
+                            </td>
                         </tr>
 
                         <tr>
                             <td>Defence</td>
                             <td id="pokemon-stat2" class="pokemon-defense"></td>
-                            <td id="type-gif2"><progress id="pokemon-stat2-pb" class="stats-progressbar"></progress></td>
+                            <td id="type-gif2"><progress id="pokemon-stat2-pb" class="stats-progressbar"></progress>
+                            </td>
                         </tr>
 
                         <tr>
                             <td>Sp. Atk</td>
                             <td id="pokemon-stat3" class="pokemon-spatk"></td>
-                            <td id="type-gif3"><progress id="pokemon-stat3-pb" class="stats-progressbar"></progress></td>
+                            <td id="type-gif3"><progress id="pokemon-stat3-pb" class="stats-progressbar"></progress>
+                            </td>
                         </tr>
 
                         <tr>
                             <td>Sp. Def</td>
                             <td id="pokemon-stat4" class="pokemon-spdef"></td>
-                            <td id="type-gif4"><progress id="pokemon-stat4-pb" class="stats-progressbar"></progress></td>
+                            <td id="type-gif4"><progress id="pokemon-stat4-pb" class="stats-progressbar"></progress>
+                            </td>
                         </tr>
 
                         <tr>
                             <td>Speed</td>
                             <td id="pokemon-stat5" class="pokemon-speed"></td>
-                            <td id="type-gif5"><progress id="pokemon-stat5-pb" class="stats-progressbar"></progress></td>
+                            <td id="type-gif5"><progress id="pokemon-stat5-pb" class="stats-progressbar"></progress>
+                            </td>
                         </tr>
 
                         <tr>
                             <td>Total</td>
                             <td id="pokemon-stat-total" class="pokemon-total"></td>
-                            <td id="type-gif-total"><progress id="pokemon-stat-total-pb" class="stats-progressbar"></progress></td>
+                            <td id="type-gif-total"><progress id="pokemon-stat-total-pb"
+                                    class="stats-progressbar"></progress></td>
                         </tr>
-                        
+
                     </table>
                     <h3>Type defenses</h3>
                     <span class="text-defenses">??? effectiveness ???</span>
@@ -263,102 +333,33 @@
 
                 <!-- Evolution -->
                 <div id="pokemon-details-evolution" class="pokemon-details-evolution d-none">
-                    <!-- <table >
-                        <tr>
-                            <td>HP</td>
-                            <td id="pokemon-hp" class="pokemon-hp"></td>
-                            <td id="pokemon-hp-pb" class="pokemon-hp-pb"></td>
-                        </tr>
+                    <div class="evolution-shell">
+                        <div class="evolution-border"><img id="evolution-base" alt=""></div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                            viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                        </svg>
+                        <div class="evolution-border"><img id="evolution-1" alt=""></div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                            viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                        </svg>
+                        <div class="evolution-border"><img id="evolution-2" alt=""></div>
+                    </div>
 
-                        <tr>
-                            <td>Attack</td>
-                            <td id="pokemon-attack" class="pokemon-attack"></td>
-                            <td id="pokemon-attack-pb" class="pokemon-attack-pb"></td>
-                        </tr>
+                    <div class="evolution-names">
+                        <span id="evolution-base-name"></span>
+                        <span id="evolution-1-name"></span>
+                        <span id="evolution-2-name"></span> 
+                    </div>
 
-                        <tr>
-                            <td>Defence</td>
-                            <td id="pokemon-defense" class="pokemon-defense"></td>
-                            <td id="pokemon-defense-pb" class="pokemon-defense-pb"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Sp. Atk</td>
-                            <td id="pokemon-spatk" class="pokemon-spatk"></td>
-                            <td id="pokemon-spatk-pb" class="pokemon-spatk-pb"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Sp. Def</td>
-                            <td id="pokemon-spdef" class="pokemon-spdef"></td>
-                            <td id="pokemon-spdef-pb" class="pokemon-spdef-pb"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Speed</td>
-                            <td id="pokemon-speed" class="pokemon-speed"></td>
-                            <td id="pokemon-speed-pb" class="pokemon-speed-pb"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Total</td>
-                            <td id="pokemon-total" class="pokemon-total"></td>
-                            <td id="pokemon-total-pb" class="pokemon-total-pb"></td>
-                        </tr>
-
-                    </table> -->
-                    <h3>Type defenses</h3>
-                    <span class="text-defenses">??? effectiveness ???</span>
                 </div>
 
                 <!-- Moves -->
                 <div id="pokemon-details-moves" class="pokemon-details-moves d-none">
-                    <!-- <table >
-                        <tr>
-                            <td>HP</td>
-                            <td id="pokemon-hp" class="pokemon-hp"></td>
-                            <td id="pokemon-hp-pb" class="pokemon-hp-pb"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Attack</td>
-                            <td id="pokemon-attack" class="pokemon-attack"></td>
-                            <td id="pokemon-attack-pb" class="pokemon-attack-pb"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Defence</td>
-                            <td id="pokemon-defense" class="pokemon-defense"></td>
-                            <td id="pokemon-defense-pb" class="pokemon-defense-pb"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Sp. Atk</td>
-                            <td id="pokemon-spatk" class="pokemon-spatk"></td>
-                            <td id="pokemon-spatk-pb" class="pokemon-spatk-pb"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Sp. Def</td>
-                            <td id="pokemon-spdef" class="pokemon-spdef"></td>
-                            <td id="pokemon-spdef-pb" class="pokemon-spdef-pb"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Speed</td>
-                            <td id="pokemon-speed" class="pokemon-speed"></td>
-                            <td id="pokemon-speed-pb" class="pokemon-speed-pb"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Total</td>
-                            <td id="pokemon-total" class="pokemon-total"></td>
-                            <td id="pokemon-total-pb" class="pokemon-total-pb"></td>
-                        </tr>
-
-                    </table> -->
-                    <h3>Type defenses</h3>
-                    <span class="text-defenses">??? effectiveness ???</span>
+                    
                 </div>
 
             </div>
