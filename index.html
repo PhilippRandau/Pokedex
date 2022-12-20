@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="./fonts.css">
 
     <script>
-        let currentPokemonName = '4';
+        let currentPokemonName = '755';
         let currentPokemon;
         let currentPokemonSpecies;
         let currentPokemonEvolution;
@@ -131,77 +131,21 @@
         }
 
 
-        function loadEvolution() {
-            buttonStyleDeAct();
-            buttonStyleAct('stats-button2');
-            unloadAllStats();
-            document.getElementById('pokemon-details-evolution').classList.remove('d-none');
-            showEvolution();
-        }
-
-
-        function showEvolution() {
-            evolutionSpeciesBase();
-            evolutionSpecies1();
-            evolutionSpecies2();
-        }
-
-        async function evolutionSpeciesBase() {
-            let evolutionBaseName = document.getElementById('evolution-base-name');
-            evolutionBaseName.innerHTML = `${charToUpperCase(currentPokemonEvolution['chain']['species']['name'])}`;
-            let url = `https://pokeapi.co/api/v2/pokemon/${currentPokemonEvolution['chain']['species']['name']}`;
-            let response = await fetch(url);
-            evolutionSpeciesBasePokemon = await response.json();
-            evolutionBaseName.innerHTML += `<br> #${pokemonIDFillWithZeros(evolutionSpeciesBasePokemon)}`;
-            document.getElementById('evolution-base').src = `${evolutionSpeciesBasePokemon['sprites']['versions']['generation-v']['black-white']['animated']['front_default']}`;
-        }
-
-
-        async function evolutionSpecies1() {
-            let evolution1Name = document.getElementById('evolution-1-name');
-            evolution1Name.innerHTML = `${charToUpperCase(currentPokemonEvolution['chain']['evolves_to'][0]['species']['name'])}`;
-            let url = `https://pokeapi.co/api/v2/pokemon/${currentPokemonEvolution['chain']['evolves_to'][0]['species']['name']}`;
-            let response = await fetch(url);
-            let evolutionSpecies1Pokemon = await response.json();
-            evolution1Name.innerHTML += `<br> #${pokemonIDFillWithZeros(evolutionSpecies1Pokemon)}`;
-            document.getElementById('evolution-1').src = `${evolutionSpecies1Pokemon['sprites']['versions']['generation-v']['black-white']['animated']['front_default']}`;
-        }
-
-
-        async function evolutionSpecies2() {
-            let evolution2Name = document.getElementById('evolution-2-name');
-            try {
-                
-                evolution2Name.innerHTML = `${charToUpperCase(currentPokemonEvolution['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'])}`
-                let url = `https://pokeapi.co/api/v2/pokemon/${currentPokemonEvolution['chain']['evolves_to'][0]['evolves_to'][0]['species']['name']}`;
-                let response = await fetch(url);
-                let evolutionSpecies2Pokemon = await response.json();
-                evolution2Name.innerHTML += `<br> #${pokemonIDFillWithZeros(evolutionSpecies2Pokemon)}`;
-                document.getElementById('evolution-2').src = `${evolutionSpecies2Pokemon['sprites']['versions']['generation-v']['black-white']['animated']['front_default']}`;
-            } catch (error) {
-                document.getElementById('evolution-2').src = `./img/slash-circle.svg`;
-                evolution2Name.innerHTML = 'no evolution';
-            }
-        }
-
-
-
-
 
         function loadMoves() {
             buttonStyleDeAct();
             buttonStyleAct('stats-button3');
             unloadAllStats();
+            document.getElementById('pokemon-details-moves').classList.remove('d-none');
             showPokemonMoves();
         }
 
         function showPokemonMoves(){
            let pokemonMoves = document.getElementById('pokemon-details-moves');
-           console.log('test');
+           pokemonMoves.innerHTML = '';
            for (let i = 0; i < currentPokemon['moves'].length; i++) {
             const moveAbility = currentPokemon['moves'][i]['move']['name'];
-            pokemonMoves.innerHTML += `<div>${moveAbility}</div>`;
-            console.log(moveAbility);
+            pokemonMoves.innerHTML += `<div class="pokemon-moves">${moveAbility}</div>`;
            }
         }
 
@@ -369,6 +313,7 @@
 
     <!--------------- Load Script Templates -------------------->
     <script src="./templates/poke-about.js"></script>
+    <script src="./templates/poke-evolution.js"></script>
 
 </body>
 
