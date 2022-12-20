@@ -1,3 +1,10 @@
+async function loadPokemonEvolution() {
+    let url = `${currentPokemonSpecies['evolution_chain']['url']}`;
+    let response = await fetch(url);
+    currentPokemonEvolution = await response.json();
+}
+
+
 function loadEvolution() {
     buttonStyleDeAct();
     buttonStyleAct('stats-button2');
@@ -12,6 +19,7 @@ function showEvolution() {
     evolutionSpecies1();
     evolutionSpecies2();
 }
+
 
 async function evolutionSpeciesBase() {
     let evolutionBaseName = document.getElementById('evolution-base-name');

@@ -18,6 +18,7 @@ function buttonStyleAct(currentStats) {
     document.getElementById(currentStats).style.borderBottom = '2px solid black';
 }
 
+
 function buttonStyleDeAct() {
     for (let i = 0; i < 4; i++) {
         document.getElementById(`stats-button${i}`).style.color = 'rgba(0, 0, 0, 0.3)';
@@ -25,6 +26,7 @@ function buttonStyleDeAct() {
     }
 
 }
+
 
 function showPokemonSpecies() {
     let pokemonSpecies = document.getElementById('pokemon-species');
@@ -214,7 +216,6 @@ function genderRate1_7(){
         87,5%
         `;
 }
-
 
 
 function genderRate100W() {

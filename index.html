@@ -10,146 +10,7 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./fonts.css">
 
-    <script>
-        let currentPokemonName = '755';
-        let currentPokemon;
-        let currentPokemonSpecies;
-        let currentPokemonEvolution;
-        let evolutionSpeciesBasePokemon;
-
-
-        async function loadPokemon() {
-            let url = `https://pokeapi.co/api/v2/pokemon/${currentPokemonName}`;
-            let response = await fetch(url);
-            currentPokemon = await response.json();
-            await loadPokemonSpecies();
-            await loadPokemonEvolution();
-
-            showDetailsPokemon();
-        }
-
-
-        async function loadPokemonSpecies() {
-            let url = `${currentPokemon['species']['url']}`;
-            let response = await fetch(url);
-            currentPokemonSpecies = await response.json();
-        }
-
-
-        async function loadPokemonEvolution() {
-            let url = `${currentPokemonSpecies['evolution_chain']['url']}`;
-            let response = await fetch(url);
-            currentPokemonEvolution = await response.json();
-        }
-
-
-        function showDetailsPokemon() {
-            let pokemonName = document.getElementById('pokemon-name');
-            pokemonName.innerHTML = `${charToUpperCase(currentPokemon['forms'][0]['name'])}`;
-
-            let pokemonID = document.getElementById('pokemon-id');
-            pokemonID.innerHTML = `#${pokemonIDFillWithZeros(currentPokemon)}`
-
-            let pokemonType = document.getElementById('pokemon-type');
-            pokemonType.innerHTML = `${charToUpperCase(currentPokemon['types'][0]['type']['name'])}`;
-
-            let pokemonSprite = document.getElementById('pokemon-sprite')
-            pokemonSprite.src = `${currentPokemon['sprites']['other']['official-artwork']['front_default']}`;
-            //show standard about stats
-            loadAbout();
-        }
-
-
-        function charToUpperCase(text) {
-            let firstCharUpperCase = text.charAt(0).toUpperCase() + text.slice(1);
-            return firstCharUpperCase;
-        }
-
-
-        function pokemonIDFillWithZeros(pokemonID) {
-            if (pokemonID['id'] > 99) {
-                return (pokemonID['id'] + "").padStart(1, "0");
-
-            } else if (currentPokemon['id'] > 9) {
-                return (pokemonID['id'] + "").padStart(2, "0");
-
-            } else {
-                return (pokemonID['id'] + "").padStart(3, "0");
-            }
-        }
-
-
-        function unloadAllStats() {
-            document.getElementById('pokemon-details-about').classList.add('d-none');
-            document.getElementById('pokemon-details-basestats').classList.add('d-none');
-            document.getElementById('pokemon-details-evolution').classList.add('d-none');
-            document.getElementById('pokemon-details-moves').classList.add('d-none');
-        }
-
-
-        function loadBaseStats() {
-            buttonStyleDeAct();
-            buttonStyleAct('stats-button1');
-            unloadAllStats();
-            showPokemonStats();
-            document.getElementById('pokemon-details-basestats').classList.remove('d-none');
-        }
-
-        function showPokemonStats() {
-            let totalStatPoints = 0;
-            for (let i = 0; i < currentPokemon['stats'].length; i++) {
-                let pokemonStat = document.getElementById(`pokemon-stat${i}`);
-                pokemonStat.innerHTML = `${currentPokemon['stats'][i]['base_stat']}`
-                totalStatPoints += currentPokemon['stats'][i]['base_stat'];
-                showPokemonStatsPb(i);
-                showPokemonStatsTypeAnimation(i);
-            }
-            let pokemonStatTotal = document.getElementById('pokemon-stat-total');
-
-            pokemonStatTotal.innerHTML = `${totalStatPoints}`;
-
-            document.getElementById(`type-gif-total`).innerHTML += `<div class="type-gif"><img style="left:calc(${totalStatPoints / 10}% - 9px)" src="./img/fire.gif" alt=""></div>`;
-            showPokemonTotalStatsPb(totalStatPoints);
-        }
-
-        function showPokemonStatsPb(i) {
-            PokemonStatPb = document.getElementById(`pokemon-stat${i}-pb`);
-            PokemonStatPb.value = `${currentPokemon['stats'][i]['base_stat']}`;
-            PokemonStatPb.max = 100;
-
-        }
-
-        function showPokemonTotalStatsPb(totalStatPoints) {
-            pokemonTotalStatPb = document.getElementById(`pokemon-stat-total-pb`);
-            pokemonTotalStatPb.value = `${totalStatPoints}`;
-            pokemonTotalStatPb.max = 1000;
-
-        }
-
-        function showPokemonStatsTypeAnimation(i) {
-            document.getElementById(`type-gif${i}`).innerHTML += `<div class="type-gif"><img style="left:calc(${currentPokemon['stats'][i]['base_stat']}% - 9px)" src="./img/fire.gif" alt=""></div>`;
-        }
-
-
-
-        function loadMoves() {
-            buttonStyleDeAct();
-            buttonStyleAct('stats-button3');
-            unloadAllStats();
-            document.getElementById('pokemon-details-moves').classList.remove('d-none');
-            showPokemonMoves();
-        }
-
-        function showPokemonMoves(){
-           let pokemonMoves = document.getElementById('pokemon-details-moves');
-           pokemonMoves.innerHTML = '';
-           for (let i = 0; i < currentPokemon['moves'].length; i++) {
-            const moveAbility = currentPokemon['moves'][i]['move']['name'];
-            pokemonMoves.innerHTML += `<div class="pokemon-moves">${moveAbility}</div>`;
-           }
-        }
-
-    </script>
+    
 </head>
 
 <body onload="loadPokemon()">
@@ -312,8 +173,11 @@
     </section>
 
     <!--------------- Load Script Templates -------------------->
+    <script src="./script.js"></script>
     <script src="./templates/poke-about.js"></script>
+    <script src="./templates/poke-basestats.js"></script>
     <script src="./templates/poke-evolution.js"></script>
+    <script src="./templates/poke-moves.js"></script>
 
 </body>
 
