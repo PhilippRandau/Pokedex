@@ -1,70 +1,68 @@
-        let currentPokemonName = '755';
-        let currentPokemon;
-        let currentPokemonSpecies;
-        let currentPokemonEvolution;
-        let evolutionSpeciesBasePokemon;
+let allPokemon;
+let offset = 0;
+
+async function loadAllPokemons() {
+    let url = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=40`;
+    let response = await fetch(url);
+    allPokemon = await response.json();
+    for (let i = 0; i < allPokemon['results'].length; i++) {
+        const pokemon = allPokemon['results'][i];
+        await loadBackground(pokemon['name']);
 
 
-        async function loadPokemon() {
-            let url = `https://pokeapi.co/api/v2/pokemon/${currentPokemonName}`;
-            let response = await fetch(url);
-            currentPokemon = await response.json();
-            await loadPokemonSpecies();
-            await loadPokemonEvolution();
+    }
 
-            showDetailsPokemon();
-        }
+    //loader display
+    document.getElementById('loader-container').classList.add('d-none');
+    const element = document.getElementById('loadMore');
+    element.addEventListener('click', showLoader);
+}
 
+async function loadBackground(pokemonNames) {
+    let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNames}/`;
+    let response = await fetch(url);
+    everyPokemon = await response.json();
 
-        async function loadPokemonSpecies() {
-            let url = `${currentPokemon['species']['url']}`;
-            let response = await fetch(url);
-            currentPokemonSpecies = await response.json();
-        }
-
-
+    document.getElementById('all-pokemon').innerHTML += /*html*/`
+    <div class="container-every-pokemon">
+        <div class="every-pokemon">
         
+            <img class="poke-pic" src='${everyPokemon['sprites']['other']['official-artwork']['front_default']}'>
+            
+        </div>
+        <div class="every-pokemon-text">
+            <span>${charToUpperCase(everyPokemon['forms'][0]['name'])}</span>
+            <span>#${pokemonIDFillWithZeros(everyPokemon['id'])}</span>
+        </div>
+    </div>
+    `;
 
 
-        function showDetailsPokemon() {
-            let pokemonName = document.getElementById('pokemon-name');
-            pokemonName.innerHTML = `${charToUpperCase(currentPokemon['forms'][0]['name'])}`;
+}
 
-            let pokemonID = document.getElementById('pokemon-id');
-            pokemonID.innerHTML = `#${pokemonIDFillWithZeros(currentPokemon)}`
-
-            let pokemonType = document.getElementById('pokemon-type');
-            pokemonType.innerHTML = `${charToUpperCase(currentPokemon['types'][0]['type']['name'])}`;
-
-            let pokemonSprite = document.getElementById('pokemon-sprite')
-            pokemonSprite.src = `${currentPokemon['sprites']['other']['official-artwork']['front_default']}`;
-            //show standard about stats
-            loadAbout();
-        }
+function searchPokemon() {
+    console.log('searching...');
+}
 
 
-        function charToUpperCase(text) {
-            let firstCharUpperCase = text.charAt(0).toUpperCase() + text.slice(1);
-            return firstCharUpperCase;
-        }
+function loadMorePokemon() {
+    offset += 40;
+    loadAllPokemons();
+}
 
 
-        function pokemonIDFillWithZeros(pokemonID) {
-            if (pokemonID['id'] > 99) {
-                return (pokemonID['id'] + "").padStart(1, "0");
-
-            } else if (currentPokemon['id'] > 9) {
-                return (pokemonID['id'] + "").padStart(2, "0");
-
-            } else {
-                return (pokemonID['id'] + "").padStart(3, "0");
-            }
-        }
+function showLoader() {
+    document.getElementById('loader-container').classList.remove('d-none');
+}
 
 
-        function unloadAllStats() {
-            document.getElementById('pokemon-details-about').classList.add('d-none');
-            document.getElementById('pokemon-details-basestats').classList.add('d-none');
-            document.getElementById('pokemon-details-evolution').classList.add('d-none');
-            document.getElementById('pokemon-details-moves').classList.add('d-none');
-        }
+//tab title change
+
+let tabTitle = document.title;
+window.addEventListener("blur", () =>{
+    document.title = "Come back :(";
+})
+window.addEventListener("focus",() =>{
+    document.title = tabTitle;
+})
+

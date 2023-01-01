@@ -20,7 +20,7 @@ function showPokemonStats() {
 
     pokemonStatTotal.innerHTML = `${totalStatPoints}`;
 
-    document.getElementById(`type-gif-total`).innerHTML += `<div class="type-gif"><img style="left:calc(${totalStatPoints / 10}% - 9px)" src="./img/fire.gif" alt=""></div>`;
+    document.getElementById(`type-gif-total`).innerHTML += `<div class="type-gif"><img style="left:calc(${totalStatPoints / 15}% - 9px)" src="./img/fire.gif" alt=""></div>`;
     showPokemonTotalStatsPb(totalStatPoints);
 }
 
@@ -28,7 +28,7 @@ function showPokemonStats() {
 function showPokemonStatsPb(i) {
     PokemonStatPb = document.getElementById(`pokemon-stat${i}-pb`);
     PokemonStatPb.value = `${currentPokemon['stats'][i]['base_stat']}`;
-    PokemonStatPb.max = 100;
+    PokemonStatPb.max = 200;
 
 }
 
@@ -36,11 +36,11 @@ function showPokemonStatsPb(i) {
 function showPokemonTotalStatsPb(totalStatPoints) {
     pokemonTotalStatPb = document.getElementById(`pokemon-stat-total-pb`);
     pokemonTotalStatPb.value = `${totalStatPoints}`;
-    pokemonTotalStatPb.max = 1000;
+    pokemonTotalStatPb.max = 1500;
 
 }
 
 
 function showPokemonStatsTypeAnimation(i) {
-    document.getElementById(`type-gif${i}`).innerHTML += `<div class="type-gif"><img style="left:calc(${currentPokemon['stats'][i]['base_stat']}% - 9px)" src="./img/fire.gif" alt=""></div>`;
+    document.getElementById(`type-gif${i}`).innerHTML += `<div class="type-gif"><img style="left:calc((${currentPokemon['stats'][i]['base_stat']}%/2) - 9px)" src="./img/fire.gif" alt=""></div>`;
 }

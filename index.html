@@ -9,18 +9,46 @@
 
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./fonts.css">
-
-    
+    <script src="./script.js"></script>
+    <script src="./templates/poke-details.js"></script>
 </head>
 
-<body onload="loadPokemon()">
-    <section class="pokemon-details">
-        <div class="bg-details">
+<body onload="loadAllPokemons()">
+
+    <div id="loader-container" class="loader-container">
+        <div class="spinner"></div>
+    </div>
+
+    <header>
+        <img class="header-img" src="./img/pokeball-pokemon-transformed.png" alt="">
+        <form onsubmit="searchPokemon(); return false;">
+            <input required minlength="3" type="search" placeholder="Search a pokemon">
+            <button>Submit</button>
+        </form>
+        <div style="width: 80px;"></div>
+        </header>
+    <section class="container">
+        
+        <div class="all-pokemon" id="all-pokemon">
+
+        </div>
+        <!-- <div class="bg"></div> -->
+        <button id="loadMore" onclick="loadMorePokemon()" class="show-more-pokemon">show more</button>
+    </section>
+    <section class="pokemon-details d-none">
+        <div id="bg-details" class="bg-details">
             <div class="global-info">
-                <img class="arrow-back" src="./img/arrow_down.ico" alt="">
-                <h1 id="pokemon-name"></h1>
-                <span class="pokemon-id" id="pokemon-id"></span>
-                <span class="pokemon-type" id="pokemon-type"></span>
+                <div class="space-between">
+                    <img class="arrow-back" src="./img/arrow_down.ico" alt="">
+                    <h1 id="pokemon-name"></h1>
+                </div>
+                <div class="space-between">
+                    <span class="pokemon-type" id="pokemon-type"></span>
+                    <span class="pokemon-id" id="pokemon-id"></span>
+                </div>
+                <span class="description-head">Description:</span>
+                <div class="description" id="description">
+                </div>
             </div>
         </div>
         <div class="bg-details-chart">
@@ -130,10 +158,7 @@
                             <td id="type-gif-total"><progress id="pokemon-stat-total-pb"
                                     class="stats-progressbar"></progress></td>
                         </tr>
-
                     </table>
-                    <h3>Type defenses</h3>
-                    <span class="text-defenses">??? effectiveness ???</span>
                 </div>
 
                 <!-- Evolution -->
@@ -157,23 +182,27 @@
                     <div class="evolution-names">
                         <span id="evolution-base-name"></span>
                         <span id="evolution-1-name"></span>
-                        <span id="evolution-2-name"></span> 
+                        <span id="evolution-2-name"></span>
                     </div>
 
                 </div>
 
                 <!-- Moves -->
                 <div id="pokemon-details-moves" class="pokemon-details-moves d-none">
-                    
+
                 </div>
 
             </div>
 
         </div>
     </section>
+    <footer>
+        Starter Fusions pokeball by <a href="https://www.deviantart.com/albrt-wlson">albrt-wlson</a>  Deviantart
 
+        <!-- <a href="https://de.vecteezy.com/gratis-vektor/pokeballs">Pokeballs Vektoren von Vecteezy</a> -->
+    </footer>
     <!--------------- Load Script Templates -------------------->
-    <script src="./script.js"></script>
+
     <script src="./templates/poke-about.js"></script>
     <script src="./templates/poke-basestats.js"></script>
     <script src="./templates/poke-evolution.js"></script>
