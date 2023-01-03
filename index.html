@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex</title>
 
+    <link rel="icon" type="image/jpg" href="./img/pokeball-pokemon-transformed.png">
+
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./fonts.css">
     <script src="./script.js"></script>
@@ -35,11 +37,11 @@
         <!-- <div class="bg"></div> -->
         <button id="loadMore" onclick="loadMorePokemon()" class="show-more-pokemon">show more</button>
     </section>
-    <section class="pokemon-details d-none">
+    <section id="pokemon-details" class="pokemon-details d-none">
         <div id="bg-details" class="bg-details">
             <div class="global-info">
                 <div class="space-between">
-                    <img class="arrow-back" src="./img/arrow_down.ico" alt="">
+                    <img onclick="closeCard()" class="arrow-back" src="./img/arrow_down.ico" alt="">
                     <h1 id="pokemon-name"></h1>
                 </div>
                 <div class="space-between">
@@ -113,50 +115,48 @@
                         <tr>
                             <td>HP</td>
                             <td id="pokemon-stat0" class="pokemon-hp"></td>
-                            <td id="type-gif0"><progress id="pokemon-stat0-pb" class="stats-progressbar"></progress>
+                            <td id="type-gif0">
                             </td>
                         </tr>
 
                         <tr>
                             <td>Attack</td>
                             <td id="pokemon-stat1" class="pokemon-attack"></td>
-                            <td id="type-gif1"><progress id="pokemon-stat1-pb" class="stats-progressbar"></progress>
+                            <td id="type-gif1">
                             </td>
                         </tr>
 
                         <tr>
                             <td>Defence</td>
                             <td id="pokemon-stat2" class="pokemon-defense"></td>
-                            <td id="type-gif2"><progress id="pokemon-stat2-pb" class="stats-progressbar"></progress>
-                            </td>
+                            <td id="type-gif2"></td>
                         </tr>
 
                         <tr>
                             <td>Sp. Atk</td>
                             <td id="pokemon-stat3" class="pokemon-spatk"></td>
-                            <td id="type-gif3"><progress id="pokemon-stat3-pb" class="stats-progressbar"></progress>
+                            <td id="type-gif3">
                             </td>
                         </tr>
 
                         <tr>
                             <td>Sp. Def</td>
                             <td id="pokemon-stat4" class="pokemon-spdef"></td>
-                            <td id="type-gif4"><progress id="pokemon-stat4-pb" class="stats-progressbar"></progress>
+                            <td id="type-gif4">
                             </td>
                         </tr>
 
                         <tr>
                             <td>Speed</td>
                             <td id="pokemon-stat5" class="pokemon-speed"></td>
-                            <td id="type-gif5"><progress id="pokemon-stat5-pb" class="stats-progressbar"></progress>
+                            <td id="type-gif5">
                             </td>
                         </tr>
 
                         <tr>
                             <td>Total</td>
                             <td id="pokemon-stat-total" class="pokemon-total"></td>
-                            <td id="type-gif-total"><progress id="pokemon-stat-total-pb"
-                                    class="stats-progressbar"></progress></td>
+                            <td id="type-gif-total"></td>
                         </tr>
                     </table>
                 </div>

@@ -16,6 +16,9 @@ async function loadAllPokemons() {
     document.getElementById('loader-container').classList.add('d-none');
     const element = document.getElementById('loadMore');
     element.addEventListener('click', showLoader);
+
+
+    
 }
 
 async function loadBackground(pokemonNames) {
@@ -25,7 +28,7 @@ async function loadBackground(pokemonNames) {
 
     document.getElementById('all-pokemon').innerHTML += /*html*/`
     <div class="container-every-pokemon">
-        <div class="every-pokemon">
+        <div onclick="loadPokemon('${pokemonNames}')" class="every-pokemon">
         
             <img class="poke-pic" src='${everyPokemon['sprites']['other']['official-artwork']['front_default']}'>
             
@@ -37,8 +40,9 @@ async function loadBackground(pokemonNames) {
     </div>
     `;
 
-
 }
+
+
 
 function searchPokemon() {
     console.log('searching...');
@@ -59,10 +63,12 @@ function showLoader() {
 //tab title change
 
 let tabTitle = document.title;
-window.addEventListener("blur", () =>{
+window.addEventListener("blur", () => {
     document.title = "Come back :(";
 })
-window.addEventListener("focus",() =>{
+window.addEventListener("focus", () => {
     document.title = tabTitle;
 })
+
+
 

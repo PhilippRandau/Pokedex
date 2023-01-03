@@ -1,11 +1,11 @@
-let currentPokemonName = '4';
+// let currentPokemonID = '4';
 let currentPokemon;
 let currentPokemonSpecies;
 let currentPokemonEvolution;
 let evolutionSpeciesBasePokemon;
 
 
-async function loadPokemon() {
+async function loadPokemon(currentPokemonName) {
     let url = `https://pokeapi.co/api/v2/pokemon/${currentPokemonName}`;
     let response = await fetch(url);
     currentPokemon = await response.json();
@@ -39,17 +39,20 @@ function showDetailsPokemon() {
     pokemonSprite.src = `${currentPokemon['sprites']['other']['official-artwork']['front_default']}`;
 
     let pokemonDescription = document.getElementById('description');
-    
+
     pokemonDescription.innerHTML = /*html*/`<span>${removeSignFromText()}</span>`;
 
     changeBgColor(pokemonType);
+
+    //show pokemon details card
+    document.getElementById('pokemon-details').classList.remove('d-none');
 
     //show standard about stats
     loadAbout();
 }
 
 
-function removeSignFromText(){
+function removeSignFromText() {
     return currentPokemonSpecies['flavor_text_entries'][0]['flavor_text'].replace('', ' ');
 }
 
@@ -165,15 +168,7 @@ function charToUpperCase(text) {
 
 
 function pokemonIDFillWithZeros(pokemonID) {
-    if (pokemonID > 99) {
-        return (pokemonID + "").padStart(1, "0");
-
-    } else if (pokemonID > 9) {
-        return (pokemonID + "").padStart(2, "0");
-
-    } else {
-        return (pokemonID + "").padStart(3, "0");
-    }
+    return (pokemonID + "").padStart(3, "0");
 }
 
 
@@ -182,4 +177,8 @@ function unloadAllStats() {
     document.getElementById('pokemon-details-basestats').classList.add('d-none');
     document.getElementById('pokemon-details-evolution').classList.add('d-none');
     document.getElementById('pokemon-details-moves').classList.add('d-none');
+}
+
+function closeCard() {
+    document.getElementById('pokemon-details').classList.add('d-none');
 }

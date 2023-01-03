@@ -27,7 +27,7 @@ async function evolutionSpeciesBase() {
     let url = `https://pokeapi.co/api/v2/pokemon/${currentPokemonEvolution['chain']['species']['name']}`;
     let response = await fetch(url);
     evolutionSpeciesBasePokemon = await response.json();
-    evolutionBaseName.innerHTML += `<br> #${pokemonIDFillWithZeros(evolutionSpeciesBasePokemon)}`;
+    evolutionBaseName.innerHTML += `<br> #${pokemonIDFillWithZeros(evolutionSpeciesBasePokemon['id'])}`;
     if (evolutionSpeciesBasePokemon['sprites']['versions']['generation-v']['black-white']['animated']['front_default'] == null) {
             document.getElementById('evolution-base').src = `${evolutionSpeciesBasePokemon['sprites']['versions']['generation-v']['black-white']['front_default']}`;
         }else{
@@ -43,7 +43,7 @@ async function evolutionSpecies1() {
         let url = `https://pokeapi.co/api/v2/pokemon/${currentPokemonEvolution['chain']['evolves_to'][0]['species']['name']}`;
         let response = await fetch(url);
         let evolutionSpecies1Pokemon = await response.json();
-        evolution1Name.innerHTML += `<br> #${pokemonIDFillWithZeros(evolutionSpecies1Pokemon)}`;
+        evolution1Name.innerHTML += `<br> #${pokemonIDFillWithZeros(evolutionSpecies1Pokemon['id'])}`;
         if (evolutionSpecies1Pokemon['sprites']['versions']['generation-v']['black-white']['animated']['front_default'] == null) {
             document.getElementById('evolution-1').src = `${evolutionSpecies1Pokemon['sprites']['versions']['generation-v']['black-white']['front_default']}`;
         }else{
@@ -64,7 +64,7 @@ async function evolutionSpecies2() {
         let url = `https://pokeapi.co/api/v2/pokemon/${currentPokemonEvolution['chain']['evolves_to'][0]['evolves_to'][0]['species']['name']}`;
         let response = await fetch(url);
         let evolutionSpecies2Pokemon = await response.json();
-        evolution2Name.innerHTML += `<br> #${pokemonIDFillWithZeros(evolutionSpecies2Pokemon)}`;
+        evolution2Name.innerHTML += `<br> #${pokemonIDFillWithZeros(evolutionSpecies2Pokemon['id'])}`;
         if (evolutionSpecies2Pokemon['sprites']['versions']['generation-v']['black-white']['animated']['front_default'] == null) {
             document.getElementById('evolution-2').src = `${evolutionSpecies2Pokemon['sprites']['versions']['generation-v']['black-white']['front_default']}`;
         }else{
