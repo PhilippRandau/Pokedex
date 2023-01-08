@@ -21,7 +21,7 @@
         <div class="spinner"></div>
     </div>
 
-    <header>
+    <header id="header">
         <img class="header-img" src="./img/pokeball-pokemon-transformed.png" alt="">
         <form onsubmit="searchPokemon(); return false;">
             <input required minlength="3" type="search" placeholder="Search a pokemon">
@@ -37,15 +37,15 @@
         <!-- <div class="bg"></div> -->
         <button id="loadMore" onclick="loadMorePokemon()" class="show-more-pokemon">show more</button>
     </section>
-    <section id="pokemon-details" class="pokemon-details d-none">
-        <div id="bg-details" class="bg-details">
+    <section onclick="closeCard()" id="pokemon-details" class="pokemon-details d-none">
+        <div onclick="event.stopPropagation()" id="bg-details" class="bg-details">
             <div class="global-info">
                 <div class="space-between">
                     <img onclick="closeCard()" class="arrow-back" src="./img/arrow_down.ico" alt="">
                     <h1 id="pokemon-name"></h1>
                 </div>
                 <div class="space-between">
-                    <span class="pokemon-type" id="pokemon-type"></span>
+                    <div id="pokemon-type"></div>
                     <span class="pokemon-id" id="pokemon-id"></span>
                 </div>
                 <span class="description-head">Description:</span>
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <div class="bg-details-chart">
+        <div onclick="event.stopPropagation()" class="bg-details-chart">
             <div class="pokemon-sprite">
                 <img id="pokemon-sprite" alt="picture of pokemon">
             </div>

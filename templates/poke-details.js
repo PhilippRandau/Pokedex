@@ -33,7 +33,14 @@ function showDetailsPokemon() {
     pokemonID.innerHTML = `#${pokemonIDFillWithZeros(currentPokemon['id'])}`
 
     let pokemonType = document.getElementById('pokemon-type');
-    pokemonType.innerHTML = `${charToUpperCase(currentPokemon['types'][0]['type']['name'])}`;
+    pokemonType.innerHTML = '';
+    for (let itype = 0; itype < currentPokemon['types'].length; itype++) {
+        const type = currentPokemon['types'][itype]['type']['name'];
+        pokemonType.innerHTML += `<span id="type-color${itype}" class="pokemon-type">${charToUpperCase(type)}</span>`;
+        let typeColor = document.getElementById(`type-color${itype}`);
+        changeCardColor(typeColor, type, itype);
+    }
+
 
     let pokemonSprite = document.getElementById('pokemon-sprite')
     pokemonSprite.src = `${currentPokemon['sprites']['other']['official-artwork']['front_default']}`;
@@ -42,120 +49,194 @@ function showDetailsPokemon() {
 
     pokemonDescription.innerHTML = /*html*/`<span>${removeSignFromText()}</span>`;
 
-    changeBgColor(pokemonType);
 
     //show pokemon details card
     document.getElementById('pokemon-details').classList.remove('d-none');
+    document.getElementById('all-pokemon').classList.add('blur');
+    document.getElementById('header').classList.add('blur');
 
     //show standard about stats
     loadAbout();
 }
 
+function showEnglishFlavorText() {
+    for (let i = 0; i < currentPokemonSpecies['flavor_text_entries'].length; i++) {
+        const textLanguage = currentPokemonSpecies['flavor_text_entries'][i]['language']['name'];
+        if (textLanguage == 'en') {
+            return currentPokemonSpecies['flavor_text_entries'][i]['flavor_text'];
+        }
+    }
+}
 
 function removeSignFromText() {
-    return currentPokemonSpecies['flavor_text_entries'][0]['flavor_text'].replace('', ' ');
+    return showEnglishFlavorText().replace('', ' ');
 }
 
 
-function changeBgColor(pokemonType) {
+function changeCardColor(typeColor, type, itype) {
     let bgDetails = document.getElementById('bg-details');
 
-    switch (currentPokemonSpecies['color']['name']) {
-        case 'brown':
-            //Normal
-            bgDetails.style.backgroundColor = '#98714e85';
-            pokemonType.style.backgroundColor = '#CAB89B';
+    switch (type) {
+        case 'normal':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#5C5C5C'; //background color of second type text
+            } else {
+                bgDetails.style.backgroundColor = '#757C82'; //background color of card
+                typeColor.style.backgroundColor = '#5C5C5C'; //background color of type text
+            }
             break;
 
-        //Fighting
-        case 'white':
-            bgDetails.style.backgroundColor = 'white';
+        case 'fighting':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#c8332b';
+            } else {
+                bgDetails.style.backgroundColor = '#AE2A24';
+                typeColor.style.backgroundColor = '#c8332b';
+            }
             break;
 
-        //Flying
-        case 'white':
-            bgDetails.style.backgroundColor = 'white';
+        case 'flying':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#676377';
+            } else {
+                bgDetails.style.backgroundColor = '#4D4A59';
+                typeColor.style.backgroundColor = '#676377';
+            }
             break;
 
-        // Poison
-        case 'white':
-            bgDetails.style.backgroundColor = 'white';
+        case 'poison':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#d24ed2';
+            } else {
+                bgDetails.style.backgroundColor = '#BB44BB';
+                typeColor.style.backgroundColor = '#d24ed2';
+            }
             break;
 
-        // Ground
-        case 'white':
-            bgDetails.style.backgroundColor = 'white';
+        case 'ground':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#ee752f';
+            } else {
+                bgDetails.style.backgroundColor = '#CB6328';
+                typeColor.style.backgroundColor = '#ee752f';
+            }
             break;
 
-        // Rock
-        case 'white':
-            bgDetails.style.backgroundColor = 'white';
+        case 'rock':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#9e8841';
+            } else {
+                bgDetails.style.backgroundColor = '#7F6E34';
+                typeColor.style.backgroundColor = '#9e8841';
+            }
             break;
 
-        // Bug
-        case 'white':
-            bgDetails.style.backgroundColor = 'white';
+        case 'bug':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#7dcf01';
+            } else {
+                bgDetails.style.backgroundColor = '#6EB700';
+                typeColor.style.backgroundColor = '#7dcf01';
+            }
             break;
 
-        // Ghost
-        case 'white':
-            bgDetails.style.backgroundColor = 'white';
+        case 'ghost':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#8f84e3';
+            } else {
+                bgDetails.style.backgroundColor = '#7D74C7';
+                typeColor.style.backgroundColor = '#8f84e3';
+            }
             break;
 
-        // Steel
-        case 'white':
-            bgDetails.style.backgroundColor = 'white';
+        case 'steel':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#3188a4';
+            } else {
+                bgDetails.style.backgroundColor = '#2C768E';
+                typeColor.style.backgroundColor = '#3188a4';
+            }
             break;
 
-        // Fire
-        case 'red':
-            bgDetails.style.backgroundColor = '#FC6C6D';
-            pokemonType.style.backgroundColor = '#ff9696';
+        case 'fire':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#fc7d1c';
+            } else {
+                bgDetails.style.backgroundColor = '#FF9730';
+                typeColor.style.backgroundColor = '#fc7d1c';
+            }
             break;
 
-        // Water
-        case 'blue':
-            bgDetails.style.backgroundColor = '#76C9DF';
-            pokemonType.style.backgroundColor = '#A2DAE7';
+        case 'water':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#A2DAE7';
+            } else {
+                bgDetails.style.backgroundColor = '#76C9DF';
+                typeColor.style.backgroundColor = '#A2DAE7';
+            }
             break;
 
-        // Grass
-        case 'white':
-            bgDetails.style.backgroundColor = 'white';
+        case 'grass':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#08995a';
+            } else {
+                bgDetails.style.backgroundColor = '#067D4A';
+                typeColor.style.backgroundColor = '#08995a';
+            }
             break;
 
-        // Electric
-        case 'white':
-            bgDetails.style.backgroundColor = 'white';
+        case 'electric':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#348aa7';
+            } else {
+                bgDetails.style.backgroundColor = '#FFCC2C';
+                typeColor.style.backgroundColor = '#348aa7';
+            }
             break;
 
-        // Psychic
-        case 'white':
-            bgDetails.style.backgroundColor = 'white';
+        case 'psychic':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#348aa7';
+            } else {
+                bgDetails.style.backgroundColor = '#2C768E';
+                typeColor.style.backgroundColor = '#348aa7';
+            }
             break;
 
-        // Ice
-        case 'white':
-            bgDetails.style.backgroundColor = 'white';
+        case 'ice':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#6ff7e9';
+            } else {
+                bgDetails.style.backgroundColor = '#61CEC3';
+                typeColor.style.backgroundColor = '#6ff7e9';
+            }
             break;
 
-        // Dragon
-        case 'white':
-            bgDetails.style.backgroundColor = 'white';
+        case 'dragon':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#0158bd';
+            } else {
+                bgDetails.style.backgroundColor = '#1C66BA';
+                typeColor.style.backgroundColor = '#0158bd';
+            }
             break;
 
-        // Dark
-        case 'white':
-            bgDetails.style.backgroundColor = 'white';
+        case 'dark':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#000000';
+            } else {
+                bgDetails.style.backgroundColor = '#4D4A59';
+                typeColor.style.backgroundColor = '#000000';
+            }
             break;
 
-        // Fairy
-        case 'white':
-            bgDetails.style.backgroundColor = 'white';
-            break;
-
-        default:
-            bgDetails.style.backgroundColor = 'white';
+        case 'fairy':
+            if (itype > 0) {
+                typeColor.style.backgroundColor = '#ffc6ef';
+            } else {
+                bgDetails.style.backgroundColor = '#E975C8';
+                typeColor.style.backgroundColor = '#ffc6ef';
+            }
             break;
     }
 }
@@ -180,5 +261,15 @@ function unloadAllStats() {
 }
 
 function closeCard() {
-    document.getElementById('pokemon-details').classList.add('d-none');
+    document.getElementById('pokemon-details').classList.add('anim-fadeout');
+    setTimeout(() => {
+        document.getElementById('pokemon-details').classList.add('d-none');
+        document.getElementById('pokemon-details').classList.remove('anim-fadeout');
+        document.getElementById('all-pokemon').classList.remove('blur');
+        document.getElementById('header').classList.remove('blur');
+    }, 490);
+}
+
+function doNotCloseCard(event) {
+    event.stopPropagation();
 }

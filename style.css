@@ -7,6 +7,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: black;
+
 }
 
 h1 {
@@ -25,7 +26,7 @@ h3 {
 
 /* Loader */
 
-.loader-container{
+.loader-container {
     position: fixed;
     display: flex;
     justify-content: center;
@@ -49,6 +50,7 @@ h3 {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -73,9 +75,18 @@ header {
     flex-direction: column;
 }
 
-.show-more-pokemon{
-    width: 100px;
+.show-more-pokemon {
+    /* width: 100px; */
     cursor: pointer;
+    background-color: #5c5c5c;
+    padding: 10px 25px;
+    color: white;
+    border-radius: 20px;
+    font-size: 16px;
+}
+
+.show-more-pokemon:hover {
+    background-color: #7c7c7c;
 }
 
 .bg {
@@ -103,12 +114,17 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 10px;
+    padding: 10px;
     cursor: pointer;
+    border-radius: 10px;
+}
+
+.container-every-pokemon:hover {
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .every-pokemon {
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
     border-radius: 10px;
     width: 100px;
     margin-bottom: 5px;
@@ -135,7 +151,6 @@ header {
 
 /* ------------------------Pokemon details section-------------------- */
 .pokemon-details {
-    background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -144,7 +159,45 @@ header {
     position: fixed;
     width: 100%;
     z-index: 2;
-    
+    animation-name: slidein;
+    animation-duration: 700ms;
+}
+
+@keyframes slidein {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    50% {
+        transform: translateY(10%);
+    }
+
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+.blur {
+    filter: blur(5px);
+}
+
+.anim-fadeout{
+    animation-name: fadeout;
+    animation-duration: 500ms;
+}
+
+@keyframes fadeout {
+    0% {
+        transform: translateY(0%);
+    }
+
+    50% {
+        transform: translateY(10%);
+    }
+
+    100% {
+        transform: translateY(-100%);
+    }
 }
 
 .bg-details {
@@ -153,6 +206,7 @@ header {
     width: 580px;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
+
 }
 
 .global-info {
@@ -185,11 +239,11 @@ header {
 }
 
 .pokemon-type {
+    margin-right: 5px;
     width: 60px;
     text-align: center;
     padding: 5px 30px;
     border-radius: 20px;
-    background-color: #ff9696;
     color: white;
 }
 
