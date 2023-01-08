@@ -28,8 +28,8 @@ async function loadEveryPokemon(pokemonNames) {
     everyPokemon = await response.json();
 
     document.getElementById('all-pokemon').innerHTML += /*html*/`
-    <div class="container-every-pokemon">
-        <div onclick="loadPokemon('${pokemonNames}')" id="every-pokemon${everyPokemon['id']}" class="every-pokemon">
+    <div onclick="loadPokemon('${pokemonNames}')" class="container-every-pokemon">
+        <div id="every-pokemon${everyPokemon['id']}" class="every-pokemon">
         
             <img class="poke-pic" src='${everyPokemon['sprites']['other']['official-artwork']['front_default']}'>
             

@@ -7,7 +7,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: black;
-
+    justify-content: space-between;
 }
 
 h1 {
@@ -41,7 +41,7 @@ h3 {
     width: 64px;
     height: 64px;
     border: 8px solid;
-    border-color: #3d5af1 transparent #3d5af1 transparent;
+    border-color: #f13d3d transparent #3d5af1 transparent;
     border-radius: 50%;
     animation: spin-anim 1.2s linear infinite;
 }
@@ -69,6 +69,39 @@ header {
     width: 60px;
 }
 
+.search{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit-search{
+    cursor: pointer;
+    /* background-color: #5c5c5c; */
+    padding: 5px 20px;
+    color: black;
+    font-weight: 500;
+    border-radius: 20px;
+    font-size: 16px;
+    margin-left: 20px;
+    margin-top: 27px;
+}
+
+.submit-search:hover{
+    background-color: #cdcdcd;
+}
+
+.gimmick{
+    display: flex;
+    flex-direction: column;
+}
+
+.eevee{
+    height: 27px;
+    object-fit: contain;
+}
+
+
 .container {
     display: flex;
     align-items: center;
@@ -76,17 +109,55 @@ header {
 }
 
 .show-more-pokemon {
-    /* width: 100px; */
     cursor: pointer;
-    background-color: #5c5c5c;
+    /* background-color: #5c5c5c; */
     padding: 10px 25px;
-    color: white;
+    color: black;
+    font-weight: 1000;
     border-radius: 20px;
     font-size: 16px;
+    margin-bottom: 20px;
+    animation: change-color 7s linear infinite;
+}
+@keyframes change-color{
+    0%{
+        background-color: rgb(118, 201, 223);
+    }
+    10%{
+        background-color: rgb(187, 68, 187);
+    }
+    20%{
+        background-color: rgb(255, 204, 44);
+    }
+    30%{
+        background-color: rgb(110, 183, 0);
+    }
+    40%{
+        background-color: rgb(255, 151, 48);
+    }
+    50%{
+        background-color: rgb(6, 125, 74);
+    }
+    60%{
+        background-color: rgb(44, 118, 142);
+    }
+    70%{
+        background-color: rgb(203, 99, 40);
+    }
+    80%{
+        background-color: rgb(117, 124, 130);
+    }
+    90%{
+        background-color: rgb(174, 42, 36);
+    }
+    100%{
+        background-color: rgb(118, 201, 223);
+    }
 }
 
+
 .show-more-pokemon:hover {
-    background-color: #7c7c7c;
+    background-color: #7c7c7c !important;
 }
 
 .bg {
@@ -494,8 +565,21 @@ td {
     border-radius: 20px;
 }
 
+footer{
+    min-height: 50px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+footer a{
+    margin: 0px 5px;
+}
 
+/* general */
 
 .d-none {
     display: none;
 }
+

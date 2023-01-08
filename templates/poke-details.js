@@ -52,8 +52,9 @@ function showDetailsPokemon() {
 
     //show pokemon details card
     document.getElementById('pokemon-details').classList.remove('d-none');
-    document.getElementById('all-pokemon').classList.add('blur');
+    document.getElementById('container').classList.add('blur');
     document.getElementById('header').classList.add('blur');
+    document.getElementById('footer').classList.add('blur');
 
     //show standard about stats
     loadAbout();
@@ -265,8 +266,9 @@ function closeCard() {
     setTimeout(() => {
         document.getElementById('pokemon-details').classList.add('d-none');
         document.getElementById('pokemon-details').classList.remove('anim-fadeout');
-        document.getElementById('all-pokemon').classList.remove('blur');
+        document.getElementById('container').classList.remove('blur');
         document.getElementById('header').classList.remove('blur');
+        document.getElementById('footer').classList.remove('blur');
     }, 490);
 }
 

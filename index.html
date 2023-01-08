@@ -18,18 +18,24 @@
 <body onload="loadAllPokemons()">
 
     <div id="loader-container" class="loader-container">
-        <div class="spinner"></div>
+        <!-- <div class="spinner"></div>  -->
+        <img class="spinner" src="./img/pokeball-pokemon-transformed (Benutzerdefiniert).png" alt="">
+        
     </div>
 
     <header id="header">
         <img class="header-img" src="./img/pokeball-pokemon-transformed.png" alt="">
-        <form onsubmit="searchPokemon(); return false;">
-            <input required minlength="3" type="search" placeholder="Search a pokemon">
-            <button>Submit</button>
+        <form class="search" onsubmit="searchPokemon(); return false;">
+            <div class="gimmick">
+                <img class="eevee" src="./img/eevee-running.gif" alt="">
+                <input required minlength="3" type="search" placeholder="Search a pokemon">
+            </div>
+            
+            <button class="submit-search">Submit</button>
         </form>
         <div style="width: 80px;"></div>
         </header>
-    <section class="container">
+    <section class="container" id="container">
         
         <div class="all-pokemon" id="all-pokemon">
 
@@ -196,8 +202,12 @@
 
         </div>
     </section>
-    <footer>
-        Starter Fusions pokeball by <a href="https://www.deviantart.com/albrt-wlson">albrt-wlson</a>  Deviantart
+    <footer id="footer">
+        <span>
+            Starter Fusions pokeball by <a href="https://www.deviantart.com/albrt-wlson">albrt-wlson</a>  and 
+            Eevee running gif <a href="https://www.deviantart.com/nintendo95">nintendo95</a> Deviantart</span>
+        
+        
 
         <!-- <a href="https://de.vecteezy.com/gratis-vektor/pokeballs">Pokeballs Vektoren von Vecteezy</a> -->
     </footer>
