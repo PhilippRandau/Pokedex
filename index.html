@@ -15,7 +15,7 @@
     <script src="./templates/poke-details.js"></script>
 </head>
 
-<body onload="loadAllPokemons()">
+<body onload="init()">
 
     <div id="loader-container" class="loader-container">
         <!-- <div class="spinner"></div>  -->
@@ -28,7 +28,7 @@
         <form class="search" onsubmit="searchPokemon(); return false;">
             <div class="gimmick">
                 <img class="eevee" src="./img/eevee-running.gif" alt="">
-                <input required minlength="3" type="search" placeholder="Search a pokemon">
+                <input id="pokemon-search" required minlength="3" type="search" placeholder="Search a pokemon">
             </div>
             
             <button class="submit-search">Submit</button>
@@ -41,7 +41,8 @@
 
         </div>
         <!-- <div class="bg"></div> -->
-        <button id="loadMore" onclick="loadMorePokemon()" class="show-more-pokemon">show more</button>
+        <button id="show-more" onclick="showMorePokemon()" class="show-more-pokemon">show more</button>
+        <button id="show-all" onclick="showAllPokemon()" class="show-more-pokemon d-none">show all</button>
     </section>
     <section onclick="closeCard()" id="pokemon-details" class="pokemon-details d-none">
         <div onclick="event.stopPropagation()" id="bg-details" class="bg-details">
@@ -205,7 +206,7 @@
     <footer id="footer">
         <span>
             Starter Fusions pokeball by <a href="https://www.deviantart.com/albrt-wlson">albrt-wlson</a>  and 
-            Eevee running gif <a href="https://www.deviantart.com/nintendo95">nintendo95</a> Deviantart</span>
+            Eevee running gif by <a href="https://www.deviantart.com/nintendo95">nintendo95</a> Deviantart</span>
         
         
 

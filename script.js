@@ -1,6 +1,12 @@
 let allPokemon;
 let everyPokemon;
+let pokemonNames;
 let offset = 0;
+
+async function init() {
+    await loadAllPokemons();
+    loadAllPokemonNames();
+}
 
 async function loadAllPokemons() {
     let url = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=40`;
@@ -13,20 +19,15 @@ async function loadAllPokemons() {
 
     }
 
-    //loader display
-    document.getElementById('loader-container').classList.add('d-none');
-    const element = document.getElementById('loadMore');
-    element.addEventListener('click', showLoader);
+    removeloader()
 
-
-    
 }
 
 async function loadEveryPokemon(pokemonNames) {
     let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNames}/`;
     let response = await fetch(url);
     everyPokemon = await response.json();
-
+    
     document.getElementById('all-pokemon').innerHTML += /*html*/`
     <div onclick="loadPokemon('${pokemonNames}')" class="container-every-pokemon">
         <div id="every-pokemon${everyPokemon['id']}" class="every-pokemon">
@@ -40,7 +41,7 @@ async function loadEveryPokemon(pokemonNames) {
         </div>
     </div>
     `;
-    
+
     let everyPokemonType = document.getElementById(`every-pokemon${everyPokemon['id']}`);
     everyPokemonType.style.backgroundColor = changeEveryBgColor(everyPokemon['types'][0]['type']['name']);
 }
@@ -105,18 +106,55 @@ function changeEveryBgColor(pokemonType) {
 
 
 function searchPokemon() {
-    console.log('searching...');
+    // showLoader();
+    let pokemonSearch = document.getElementById('pokemon-search');
+    searchInput = pokemonSearch.value.toLowerCase();
+    document.getElementById('all-pokemon').innerHTML = ''; //clear pokemon stack
+    for (let i = 0; i < pokemonNames['results'].length; i++) {
+        const pokemonName = pokemonNames['results'][i]['name'];
+
+        if (pokemonName.includes(searchInput)) {
+            loadEveryPokemon(pokemonName);
+        }
+
+    }
+    // replace show more button with show all 
+    document.getElementById('show-more').classList.add('d-none');
+    document.getElementById('show-all').classList.remove('d-none');
+    // removeloader();
+}
+
+async function loadAllPokemonNames() {
+    let url = `https://pokeapi.co/api/v2/pokemon/?offset=0&limit=903`;
+    let response = await fetch(url);
+    pokemonNames = await response.json();
+
 }
 
 
-function loadMorePokemon() {
+function showMorePokemon() {
     offset += 40;
     loadAllPokemons();
+}
+
+function showAllPokemon() {
+    document.getElementById('all-pokemon').innerHTML = ''; //clear pokemon stack
+    document.getElementById('show-more').classList.remove('d-none');
+    document.getElementById('show-all').classList.add('d-none');
+    offset = 0;
+    loadAllPokemons();
+    
 }
 
 
 function showLoader() {
     document.getElementById('loader-container').classList.remove('d-none');
+}
+
+function removeloader(){
+    document.getElementById('loader-container').classList.add('d-none');
+    const element = document.getElementById('show-more');
+    element.addEventListener('click', showLoader);
 }
 
 

@@ -32,6 +32,8 @@ h3 {
     justify-content: center;
     align-items: center;
     background-color: black;
+    /* background-image: url(./img/background.gif);
+    backdrop-filter: blur(5px); */
     height: 100vh;
     width: 100vw;
     z-index: 3;
@@ -162,15 +164,15 @@ header {
 
 .bg {
     background-image: url(./img/background.gif);
-    background-repeat: repeat-y;
-    background-size: cover;
-    filter: blur(10px);
-    position: absolute;
+    background-repeat: repeat;
+    background-size: contain;
+    filter: blur(2px);
+    position: fixed;
     top: 0px;
     bottom: 0px;
     left: 0px;
     right: 0px;
-    z-index: 0;
+    z-index: -1;
 }
 
 .all-pokemon {
@@ -195,10 +197,11 @@ header {
 }
 
 .every-pokemon {
-    /* background-color: aquamarine; */
-    border-radius: 10px;
-    width: 100px;
-    margin-bottom: 5px;
+    /* border-radius: 10px; */
+    width: 110px;
+    /* margin-bottom: 5px; */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .every-pokemon-text {
@@ -206,6 +209,13 @@ header {
     flex-direction: column;
     align-items: center;
     color: white;
+    background-color: #ffffff23;
+    width: 110px;
+    /* border-radius: 10px; */
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .poke-pic {
