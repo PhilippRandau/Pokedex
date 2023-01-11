@@ -27,7 +27,7 @@ function showDetailsPokemon() {
 
 
     let pokemonName = document.getElementById('pokemon-name');
-    pokemonName.innerHTML = `${charToUpperCase(currentPokemon['forms'][0]['name'])}`;
+    pokemonName.innerHTML = `${charToUpperCase(currentPokemon['species']['name'])}`;
 
     let pokemonID = document.getElementById('pokemon-id');
     pokemonID.innerHTML = `#${pokemonIDFillWithZeros(currentPokemon['id'])}`

@@ -63,21 +63,30 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 80px;
     margin: 0px 20px;
+
 }
 
 .header-img {
-    width: 60px;
+    width: 128px;
+    height: 128px;
+    /* margin-top: 27px; */
+    margin: 27px 0px;
+    margin-left: 40px;
 }
 
-.search{
+form input {
+    height: 32px;
+    border-radius: 10px;
+}
+
+.search {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.submit-search{
+.submit-search {
     cursor: pointer;
     /* background-color: #5c5c5c; */
     padding: 5px 20px;
@@ -86,20 +95,21 @@ header {
     border-radius: 20px;
     font-size: 16px;
     margin-left: 20px;
-    margin-top: 27px;
 }
 
-.submit-search:hover{
+.submit-search:hover {
     background-color: #cdcdcd;
 }
 
-.gimmick{
+.gimmick {
     display: flex;
     flex-direction: column;
+    padding-bottom: 27px;
 }
 
-.eevee{
+.eevee {
     height: 27px;
+    width: 100%;
     object-fit: contain;
 }
 
@@ -121,38 +131,49 @@ header {
     margin-bottom: 20px;
     animation: change-color 7s linear infinite;
 }
-@keyframes change-color{
-    0%{
+
+@keyframes change-color {
+    0% {
         background-color: rgb(118, 201, 223);
     }
-    10%{
+
+    10% {
         background-color: rgb(187, 68, 187);
     }
-    20%{
+
+    20% {
         background-color: rgb(255, 204, 44);
     }
-    30%{
+
+    30% {
         background-color: rgb(110, 183, 0);
     }
-    40%{
+
+    40% {
         background-color: rgb(255, 151, 48);
     }
-    50%{
+
+    50% {
         background-color: rgb(6, 125, 74);
     }
-    60%{
+
+    60% {
         background-color: rgb(44, 118, 142);
     }
-    70%{
+
+    70% {
         background-color: rgb(203, 99, 40);
     }
-    80%{
+
+    80% {
         background-color: rgb(117, 124, 130);
     }
-    90%{
+
+    90% {
         background-color: rgb(174, 42, 36);
     }
-    100%{
+
+    100% {
         background-color: rgb(118, 201, 223);
     }
 }
@@ -216,6 +237,7 @@ header {
     border-bottom-right-radius: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
+    text-align: center;
 }
 
 .poke-pic {
@@ -262,7 +284,7 @@ header {
     filter: blur(5px);
 }
 
-.anim-fadeout{
+.anim-fadeout {
     animation-name: fadeout;
     animation-duration: 500ms;
 }
@@ -575,7 +597,7 @@ td {
     border-radius: 20px;
 }
 
-footer{
+footer {
     min-height: 50px;
     background-color: white;
     display: flex;
@@ -583,7 +605,8 @@ footer{
     justify-content: center;
     text-align: center;
 }
-footer a{
+
+footer a {
     margin: 0px 5px;
 }
 
@@ -593,3 +616,35 @@ footer a{
     display: none;
 }
 
+/* responsive */
+
+@media(max-width:600px) {
+
+    header {
+        flex-direction: column;
+
+    }
+
+    .header-img {
+        margin-left: unset;
+    }
+}
+
+@media(max-width:450px) {
+
+    .submit-search {
+        margin-left: 10px;
+    }
+
+
+    form input {
+        border-radius: 10px;
+    }
+}
+
+@media(max-width:350px) {
+    form input {
+        width: 150px;
+    }
+
+}

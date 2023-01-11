@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex</title>
 
-    <link rel="icon" type="image/jpg" href="./img/pokeball-pokemon-transformed.png">
+    <link rel="icon" type="image/jpg" href="./img/pokeball64.png">
 
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./fonts.css">
@@ -19,21 +19,21 @@
 
     <div id="loader-container" class="loader-container">
         <!-- <div class="spinner"></div>  -->
-        <img class="spinner" src="./img/pokeball-pokemon-transformed (Benutzerdefiniert).png" alt="">
+        <img class="spinner" src="./img/pokeball64.png" alt="pokeball picture">
         
     </div>
 
     <header id="header">
-        <img class="header-img" src="./img/pokeball-pokemon-transformed.png" alt="">
+        <img class="header-img" src="./img/pokeball128.png" alt="pokeball picture">
         <form class="search" onsubmit="searchPokemon(); return false;">
             <div class="gimmick">
-                <img class="eevee" src="./img/eevee-running.gif" alt="">
+                <img class="eevee" src="./img/eevee-running.gif" alt="running pokemon">
                 <input id="pokemon-search" required minlength="3" type="search" placeholder="Search a pokemon">
             </div>
             
-            <button class="submit-search">Submit</button>
+            <button id="submit-search" class="submit-search">Submit</button>
         </form>
-        <div style="width: 80px;"></div>
+        <div class="space" style="width: 10px;"></div>
         </header>
     <section class="container" id="container">
         
@@ -48,7 +48,7 @@
         <div onclick="event.stopPropagation()" id="bg-details" class="bg-details">
             <div class="global-info">
                 <div class="space-between">
-                    <img onclick="closeCard()" class="arrow-back" src="./img/arrow_down.ico" alt="">
+                    <img onclick="closeCard()" class="arrow-back" src="./img/arrow_down.ico" alt="arrow down">
                     <h1 id="pokemon-name"></h1>
                 </div>
                 <div class="space-between">
@@ -171,19 +171,19 @@
                 <!-- Evolution -->
                 <div id="pokemon-details-evolution" class="pokemon-details-evolution d-none">
                     <div class="evolution-shell">
-                        <div class="evolution-border"><img id="evolution-base" alt=""></div>
+                        <div class="evolution-border"><img id="evolution-base" alt="base evolution of pokemon"></div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                             viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
                                 d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
                         </svg>
-                        <div class="evolution-border"><img id="evolution-1" alt=""></div>
+                        <div class="evolution-border"><img id="evolution-1" alt="first evolution of pokemon"></div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                             viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
                                 d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
                         </svg>
-                        <div class="evolution-border"><img id="evolution-2" alt=""></div>
+                        <div class="evolution-border"><img id="evolution-2" alt="second evolution of pokemon"></div>
                     </div>
 
                     <div class="evolution-names">

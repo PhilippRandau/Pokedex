@@ -16,10 +16,9 @@ async function loadAllPokemons() {
         const pokemon = allPokemon['results'][i];
         await loadEveryPokemon(pokemon['name']);
 
-
     }
 
-    removeloader()
+    removeloader();
 
 }
 
@@ -27,12 +26,12 @@ async function loadEveryPokemon(pokemonNames) {
     let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNames}/`;
     let response = await fetch(url);
     everyPokemon = await response.json();
-    
+
     document.getElementById('all-pokemon').innerHTML += /*html*/`
     <div onclick="loadPokemon('${pokemonNames}')" class="container-every-pokemon">
         <div id="every-pokemon${everyPokemon['id']}" class="every-pokemon">
         
-            <img class="poke-pic" src='${everyPokemon['sprites']['other']['official-artwork']['front_default']}'>
+            <img id = "imageid" class="poke-pic" src='${everyPokemon['sprites']['other']['official-artwork']['front_default']}'>
             
         </div>
         <div class="every-pokemon-text">
@@ -41,10 +40,12 @@ async function loadEveryPokemon(pokemonNames) {
         </div>
     </div>
     `;
-
+    // getBase64Image();
     let everyPokemonType = document.getElementById(`every-pokemon${everyPokemon['id']}`);
     everyPokemonType.style.backgroundColor = changeEveryBgColor(everyPokemon['types'][0]['type']['name']);
 }
+
+
 
 function changeEveryBgColor(pokemonType) {
     switch (pokemonType) {
@@ -105,8 +106,7 @@ function changeEveryBgColor(pokemonType) {
 }
 
 
-function searchPokemon() {
-    // showLoader();
+async function searchPokemon() {
     let pokemonSearch = document.getElementById('pokemon-search');
     searchInput = pokemonSearch.value.toLowerCase();
     document.getElementById('all-pokemon').innerHTML = ''; //clear pokemon stack
@@ -114,14 +114,14 @@ function searchPokemon() {
         const pokemonName = pokemonNames['results'][i]['name'];
 
         if (pokemonName.includes(searchInput)) {
-            loadEveryPokemon(pokemonName);
+            await loadEveryPokemon(pokemonName);
         }
 
     }
     // replace show more button with show all 
     document.getElementById('show-more').classList.add('d-none');
     document.getElementById('show-all').classList.remove('d-none');
-    // removeloader();
+    removeloader();
 }
 
 async function loadAllPokemonNames() {
@@ -143,18 +143,22 @@ function showAllPokemon() {
     document.getElementById('show-all').classList.add('d-none');
     offset = 0;
     loadAllPokemons();
-    
+
 }
 
 
 function showLoader() {
     document.getElementById('loader-container').classList.remove('d-none');
+
+
 }
 
-function removeloader(){
+function removeloader() {
     document.getElementById('loader-container').classList.add('d-none');
-    const element = document.getElementById('show-more');
-    element.addEventListener('click', showLoader);
+
+    document.getElementById('show-more').addEventListener('click', showLoader);
+    document.getElementById('show-all').addEventListener('click', showLoader);
+    document.getElementById('submit-search').addEventListener('click', showLoader);
 }
 
 

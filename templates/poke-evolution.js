@@ -29,9 +29,12 @@ async function evolutionSpeciesBase() {
     let response = await fetch(url);
     evolutionSpeciesBasePokemon = await response.json();
     evolutionBaseName.innerHTML += `<br> #${pokemonIDFillWithZeros(evolutionSpeciesBasePokemon['id'])}`;
-    if (evolutionSpeciesBasePokemon['sprites']['versions']['generation-v']['black-white']['animated']['front_default'] == null) {
+    if (evolutionSpeciesBasePokemon['sprites']['versions']['generation-v']['black-white']['animated']['front_default'] == null && evolutionSpeciesBasePokemon['sprites']['versions']['generation-v']['black-white']['front_default'] == null) {
+            document.getElementById('evolution-base').src = `${evolutionSpeciesBasePokemon['sprites']['front_default']}`;
+        }else if(evolutionSpeciesBasePokemon['sprites']['versions']['generation-v']['black-white']['animated']['front_default'] == null){
             document.getElementById('evolution-base').src = `${evolutionSpeciesBasePokemon['sprites']['versions']['generation-v']['black-white']['front_default']}`;
-        }else{
+        }
+        else{
             document.getElementById('evolution-base').src = `${evolutionSpeciesBasePokemon['sprites']['versions']['generation-v']['black-white']['animated']['front_default']}`;
         }
 }
