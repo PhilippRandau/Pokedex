@@ -107,6 +107,7 @@ function changeEveryBgColor(pokemonType) {
 
 
 async function searchPokemon() {
+    showLoader();
     let pokemonSearch = document.getElementById('pokemon-search');
     searchInput = pokemonSearch.value.toLowerCase();
     document.getElementById('all-pokemon').innerHTML = ''; //clear pokemon stack
@@ -133,11 +134,13 @@ async function loadAllPokemonNames() {
 
 
 function showMorePokemon() {
+    showLoader();
     offset += 40;
     loadAllPokemons();
 }
 
 function showAllPokemon() {
+    showLoader();
     document.getElementById('all-pokemon').innerHTML = ''; //clear pokemon stack
     document.getElementById('show-more').classList.remove('d-none');
     document.getElementById('show-all').classList.add('d-none');
@@ -149,16 +152,12 @@ function showAllPokemon() {
 
 function showLoader() {
     document.getElementById('loader-container').classList.remove('d-none');
-
+    
 
 }
 
 function removeloader() {
     document.getElementById('loader-container').classList.add('d-none');
-
-    document.getElementById('show-more').addEventListener('click', showLoader);
-    document.getElementById('show-all').addEventListener('click', showLoader);
-    document.getElementById('submit-search').addEventListener('click', showLoader);
 }
 
 

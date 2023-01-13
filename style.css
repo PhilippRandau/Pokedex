@@ -8,6 +8,7 @@ body {
     flex-direction: column;
     background-color: black;
     justify-content: space-between;
+    
 }
 
 h1 {
@@ -78,6 +79,7 @@ header {
 form input {
     height: 32px;
     border-radius: 10px;
+    border: none;
 }
 
 .search {
@@ -95,6 +97,7 @@ form input {
     border-radius: 20px;
     font-size: 16px;
     margin-left: 20px;
+    border: none;
 }
 
 .submit-search:hover {
@@ -389,7 +392,8 @@ form input {
 
 .bg-details-chart {
     background-color: white;
-    min-height: 540px;
+    /* min-height: 540px; */
+    height: 42vh;
     border-radius: 40px;
     margin-top: -40px;
     width: 580px;
@@ -432,7 +436,9 @@ form input {
     margin-top: 20px;
     font-size: 14px;
     height: 380px;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* ------------------------About Section-------------------- */
@@ -468,6 +474,7 @@ td {
     padding-bottom: 20px;
 }
 
+
 /* --------------------Base Stats Section--------------------------- */
 
 .text-defenses {
@@ -491,7 +498,7 @@ td {
     height: 10px;
     border-radius: 7px;
     width: 200px;
-    margin-left: 75px;
+    /* margin-left: 20px; */
     /* box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2); */
 }
 
@@ -513,8 +520,9 @@ td {
     position: absolute;
     /* background-color: rgba(0, 0, 0, 0.112); */
     width: 200px;
-    margin-left: 75px;
+    /* margin-left: 20px; */
 }
+
 
 .type-gif img {
     position: relative;
@@ -528,7 +536,7 @@ td {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    min-height: 400px;
+    /* min-height: 400px; */
     background-image: url(./img/background_evolution.png);
     background-size: contain;
     background-position: center;
@@ -536,6 +544,7 @@ td {
     padding-left: 20px;
     padding-right: 20px;
     color: white;
+    height: 250px;
 }
 
 .evolution-shell {
@@ -572,6 +581,7 @@ td {
     display: grid;
     grid-template-columns: repeat(2, 220px);
     grid-gap: 10px;
+    width: 100%;
 }
 
 .pokemon-details-moves::-webkit-scrollbar {
@@ -618,6 +628,23 @@ footer a {
 
 /* responsive */
 
+@media(max-width:650px) {
+
+    .bg-details {
+        width: 500px;
+    }
+
+    .bg-details-chart {
+        width: 500px;
+    }
+
+    .pokemon-details-moves {
+        grid-template-columns: repeat(2, 190px);
+        /* grid-gap: 10px; */
+    }
+
+}
+
 @media(max-width:600px) {
 
     header {
@@ -630,21 +657,278 @@ footer a {
     }
 }
 
+@media(max-width:550px) {
+
+    .bg-details {
+        width: 450px;
+        /* height: 35vh; */
+    }
+
+    .bg-details-chart {
+        width: 450px;
+        /* min-height: 480px; */
+    }
+
+    .pokemon-sprite {
+        height: 60px;
+    }
+
+    .pokemon-sprite img {
+        top: -160px;
+        height: 230px;
+    }
+
+    td {
+        padding-bottom: 15px;
+    }
+
+    .pokemon-details-content {
+        height: 355px;
+    }
+
+    .pokemon-details-moves {
+        grid-template-columns: repeat(1, 335px);
+        grid-gap: 5px;
+    }
+
+    .evolution-border {
+        height: 80px;
+        width: 80px;
+    }
+
+    .evolution-border img {
+        height: 75px;
+        width: 75px;
+        object-fit: contain;
+    }
+
+    .evolution-names span {
+        width: 90px;
+    }
+}
+
+@media(max-width:500px) {
+
+    .bg-details {
+        width: 400px;
+        /* height: 35vh; */
+    }
+
+    .bg-details-chart {
+        width: 400px;
+    }
+
+    .pokemon-sprite {
+        height: 50px;
+    }
+
+    .pokemon-sprite img {
+        top: -150px;
+        height: 210px;
+    }
+
+    .global-info {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 25px;
+    }
+
+    .pokemon-details-nav {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .pokemon-details-content {
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    .description span {
+        font-size: 14px;
+    }
+
+    .pokemon-details-moves {
+        grid-template-columns: repeat(1, 330px);
+    }
+
+    .evolution-border {
+        height: 70px;
+        width: 70px;
+    }
+
+    .evolution-border img {
+        height: 65px;
+        width: 65px;
+        object-fit: contain;
+    }
+
+    .evolution-names span {
+        width: 80px;
+    }
+
+   
+}
+
 @media(max-width:450px) {
+
+    h1 {
+        font-size: 32px;
+    }
+
+    h3 {
+        margin-block-start: unset;
+        margin-block-end: unset;
+    }
 
     .submit-search {
         margin-left: 10px;
+    }
+
+    .description span {
+        font-size: 12px;
+    }
+
+    .arrow-back {
+        width: 24px;
+        height: 24px;
     }
 
 
     form input {
         border-radius: 10px;
     }
-}
 
-@media(max-width:350px) {
-    form input {
+    .bg-details {
+        width: 350px;
+        /* height: 30vh; */
+    }
+
+    .bg-details-chart {
+        width: 350px;
+    }
+
+    .pokemon-sprite img {
+        top: -150px;
+        height: 200px;
+    }
+
+    .description {
+        line-height: 15px;
+    }
+
+    .pokemon-details-moves {
+        grid-template-columns: repeat(1, 280px);
+    }
+
+    .evolution-border {
+        height: 60px;
+        width: 60px;
+    }
+
+    .evolution-border img {
+        height: 55px;
+        width: 55px;
+        object-fit: contain;
+    }
+
+    .pokemon-details-content {
+        height: 250px;
+        margin-top: 10px;
+    }
+
+    .evolution-names span {
+        width: 70px;
+    }
+
+    td {
+        padding-bottom: 5px;
+    }
+
+    .stats-progressbar {
         width: 150px;
     }
 
+    .type-gif{
+        width: 150px;
+    }
+
+    .gender-female{
+        margin-left: unset;
+    }
+    .pokemon-details-about td:first-child {
+        width: 110px;
+    }
 }
+
+    @media(max-width:400px) {
+
+        .bg-details {
+            height: 45vh;
+        }
+
+        .bg-details-chart {
+            width: 350px;
+            height: 350px;
+        }
+
+        .description-head{
+            display: none;
+        }
+
+        .description{
+            border-top-left-radius: 10px;
+            padding-top: 5px;
+        }
+
+        .pokemon-sprite img{
+            top: -110px;
+            width: 150px;
+            height: 150px;
+        }
+
+        .pokemon-sprite {
+            height: 30px;
+        }
+
+        .pokemon-details-content {
+            height: 250px;
+        }
+
+    }
+
+    @media(max-width:350px) {
+        form input {
+            width: 150px;
+        }
+
+        .bg-details-chart {
+            width: 300px;
+        }
+
+        .bg-details{
+            width: 300px;
+        }
+
+        .pokemon-details-moves {
+            grid-template-columns: repeat(1, 220px);
+        }
+
+        .pokemon-details-nav button{
+            padding-bottom: 5px;
+        }
+
+        .pokemon-details-evolution{
+            width: 240px;
+        }
+
+        .pokemon-details-nav {
+            padding-left: 7px;
+            padding-right: 7px;
+        }
+
+        .pokemon-details-content {
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+    }
