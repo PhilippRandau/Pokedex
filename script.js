@@ -3,13 +3,14 @@ let everyPokemon;
 let pokemonNames;
 let offset = 0;
 
+
 async function init() {
     await loadAllPokemons();
     loadAllPokemonNames();
 }
 
 async function loadAllPokemons() {
-    let url = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=40`;
+    let url = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=20`;
     let response = await fetch(url);
     allPokemon = await response.json();
     for (let i = 0; i < allPokemon['results'].length; i++) {
@@ -31,7 +32,7 @@ async function loadEveryPokemon(pokemonNames) {
     <div onclick="loadPokemon('${pokemonNames}')" class="container-every-pokemon">
         <div id="every-pokemon${everyPokemon['id']}" class="every-pokemon">
         
-            <img id = "imageid" class="poke-pic" src='${everyPokemon['sprites']['other']['official-artwork']['front_default']}'>
+            <img class="poke-pic" src='${everyPokemon['sprites']['other']['official-artwork']['front_default']}'>
             
         </div>
         <div class="every-pokemon-text">
@@ -40,9 +41,21 @@ async function loadEveryPokemon(pokemonNames) {
         </div>
     </div>
     `;
-    // getBase64Image();
     let everyPokemonType = document.getElementById(`every-pokemon${everyPokemon['id']}`);
     everyPokemonType.style.backgroundColor = changeEveryBgColor(everyPokemon['types'][0]['type']['name']);
+}
+
+function showSelectedGeneration(generationOffset){
+    showLoader();
+    offset = generationOffset;
+    document.getElementById('all-pokemon').innerHTML = ''; //clear pokemon stack
+    loadAllPokemons();
+}
+
+function showMorePokemon() {
+    showLoader();
+    offset += 20;
+    loadAllPokemons();
 }
 
 
@@ -133,11 +146,7 @@ async function loadAllPokemonNames() {
 }
 
 
-function showMorePokemon() {
-    showLoader();
-    offset += 40;
-    loadAllPokemons();
-}
+
 
 function showAllPokemon() {
     showLoader();
@@ -152,12 +161,12 @@ function showAllPokemon() {
 
 function showLoader() {
     document.getElementById('loader-container').classList.remove('d-none');
-    
-
+    document.getElementById('body').style.overflow = "hidden";
 }
 
 function removeloader() {
     document.getElementById('loader-container').classList.add('d-none');
+    document.getElementById('body').style.overflow = "scroll";
 }
 
 

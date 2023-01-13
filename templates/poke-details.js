@@ -53,6 +53,7 @@ function showDetailsPokemon() {
     //show pokemon details card
     document.getElementById('pokemon-details').classList.remove('d-none');
     document.getElementById('container').classList.add('blur');
+    document.getElementById('generations').classList.add('blur');
     document.getElementById('header').classList.add('blur');
     document.getElementById('footer').classList.add('blur');
 

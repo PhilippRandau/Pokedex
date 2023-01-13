@@ -20,7 +20,7 @@
     <div id="loader-container" class="loader-container">
         <!-- <div class="spinner"></div>  -->
         <img class="spinner" src="./img/pokeball64.png" alt="pokeball picture">
-        
+
     </div>
 
     <header id="header">
@@ -30,13 +30,26 @@
                 <img class="eevee" src="./img/eevee-running.gif" alt="running pokemon">
                 <input id="pokemon-search" required minlength="3" type="search" placeholder="Search a pokemon">
             </div>
-            
+
             <button id="submit-search" class="submit-search">Submit</button>
         </form>
-        <div class="space" style="width: 10px;"></div>
-        </header>
+        <!-- <div class="space" style="width: 10px;"></div> -->
+    </header>
+    <div id="generations" class="generations">
+        <h2>Generations</h2>
+        <div class="select-generations">
+            <button onclick="showSelectedGeneration(0)">1</button>
+            <button onclick="showSelectedGeneration(151)">2</button>
+            <button onclick="showSelectedGeneration(251)">3</button>
+            <button onclick="showSelectedGeneration(386)">4</button>
+            <button onclick="showSelectedGeneration(493)">5</button>
+            <button onclick="showSelectedGeneration(649)">6</button>
+            <button onclick="showSelectedGeneration(721)">7</button>
+            <button onclick="showSelectedGeneration(809)">8</button>
+        </div>
+    </div>
     <section class="container" id="container">
-        
+
         <div class="all-pokemon" id="all-pokemon">
 
         </div>
@@ -205,10 +218,10 @@
     </section>
     <footer id="footer">
         <span>
-            Starter Fusions pokeball by <a href="https://www.deviantart.com/albrt-wlson">albrt-wlson</a>  and 
+            Starter Fusions pokeball by <a href="https://www.deviantart.com/albrt-wlson">albrt-wlson</a> and
             Eevee running gif by <a href="https://www.deviantart.com/nintendo95">nintendo95</a> Deviantart</span>
-        
-        
+
+
 
         <!-- <a href="https://de.vecteezy.com/gratis-vektor/pokeballs">Pokeballs Vektoren von Vecteezy</a> -->
     </footer>
