@@ -38,14 +38,14 @@
     <div id="generations" class="generations">
         <h2>Generations</h2>
         <div class="select-generations">
-            <button onclick="showSelectedGeneration(0)">1</button>
-            <button onclick="showSelectedGeneration(151)">2</button>
-            <button onclick="showSelectedGeneration(251)">3</button>
-            <button onclick="showSelectedGeneration(386)">4</button>
-            <button onclick="showSelectedGeneration(493)">5</button>
-            <button onclick="showSelectedGeneration(649)">6</button>
-            <button onclick="showSelectedGeneration(721)">7</button>
-            <button onclick="showSelectedGeneration(809)">8</button>
+            <button id="select-generations1" onclick="showSelectedGeneration(0, 151)">1</button>
+            <button id="select-generations2" onclick="showSelectedGeneration(151, 251)">2</button>
+            <button id="select-generations3" onclick="showSelectedGeneration(251, 386)">3</button>
+            <button id="select-generations4" onclick="showSelectedGeneration(386, 493)">4</button>
+            <button id="select-generations5" onclick="showSelectedGeneration(493, 649)">5</button>
+            <button id="select-generations6" onclick="showSelectedGeneration(649, 721)">6</button>
+            <button id="select-generations7" onclick="showSelectedGeneration(721, 809)">7</button>
+            <button id="select-generations8" onclick="showSelectedGeneration(809, 1008)">8</button>
         </div>
     </div>
     <section class="container" id="container">
@@ -56,6 +56,8 @@
         <!-- <div class="bg"></div> -->
         <button id="show-more" onclick="showMorePokemon()" class="show-more-pokemon">show more</button>
         <button id="show-all" onclick="showAllPokemon()" class="show-more-pokemon d-none">show all</button>
+        <span id="show-generation-end" class="generation-end d-none">End of generation</span>
+        <a class="jump-top" href="#top">Jump to top of page</a>
     </section>
     <section onclick="closeCard()" id="pokemon-details" class="pokemon-details d-none">
         <div onclick="event.stopPropagation()" id="bg-details" class="bg-details">

@@ -268,6 +268,7 @@ function closeCard() {
         document.getElementById('pokemon-details').classList.add('d-none');
         document.getElementById('pokemon-details').classList.remove('anim-fadeout');
         document.getElementById('container').classList.remove('blur');
+        document.getElementById('generations').classList.remove('blur');
         document.getElementById('header').classList.remove('blur');
         document.getElementById('footer').classList.remove('blur');
     }, 490);

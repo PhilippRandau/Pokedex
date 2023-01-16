@@ -10,6 +10,10 @@ body {
     justify-content: space-between;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 h1 {
     font-size: 42px;
     color: white;
@@ -135,6 +139,27 @@ form input:focus {
     flex-direction: column;
 }
 
+.generation-end {
+    background-color: #5c5c5c;
+    padding: 10px 25px;
+    color: black;
+    font-weight: 1000;
+    border-radius: 20px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.jump-top{
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+    border-radius: 20px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    background-color: #ffffff23;
+    padding: 10px 25px;
+}
+
 .show-more-pokemon {
     cursor: pointer;
     /* background-color: #5c5c5c; */
@@ -232,6 +257,12 @@ h2 {
     background-color: rgba(255, 255, 255, 0.3);
     cursor: pointer;
 }
+
+.bg-gen-buttons {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+
 
 /* .bg {
     background-image: url(./img/background.gif);
@@ -960,6 +991,7 @@ footer a {
         width: 150px;
         height: 150px;
     }
+
     .bg-details-chart {
         width: 300px;
     }

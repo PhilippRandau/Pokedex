@@ -2,15 +2,21 @@ let allPokemon;
 let everyPokemon;
 let pokemonNames;
 let offset = 0;
-
+let maxGenValue;
+let limit = 20;
 
 async function init() {
-    await loadAllPokemons();
     loadAllPokemonNames();
+    showSelectedGeneration(0, 151);
+    document.getElementById('select-generations1').classList.add('bg-gen-buttons');
+    document.getElementById('show-all').addEventListener("click", function () { document.getElementById('select-generations1').classList.add('bg-gen-buttons') });
+
+    markSelectedGeneration();
 }
 
+
 async function loadAllPokemons() {
-    let url = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=20`;
+    let url = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`;
     let response = await fetch(url);
     allPokemon = await response.json();
     for (let i = 0; i < allPokemon['results'].length; i++) {
@@ -20,8 +26,9 @@ async function loadAllPokemons() {
     }
 
     removeloader();
-
+    
 }
+
 
 async function loadEveryPokemon(pokemonNames) {
     let url = `https://pokeapi.co/api/v2/pokemon/${pokemonNames}/`;
@@ -45,19 +52,36 @@ async function loadEveryPokemon(pokemonNames) {
     everyPokemonType.style.backgroundColor = changeEveryBgColor(everyPokemon['types'][0]['type']['name']);
 }
 
-function showSelectedGeneration(generationOffset){
+
+function showSelectedGeneration(generationOffset, maxGenerationOffset) {
+    maxGenValue = maxGenerationOffset;
+    clearMarkedGenButtons();
     showLoader();
     offset = generationOffset;
     document.getElementById('all-pokemon').innerHTML = ''; //clear pokemon stack
+    document.getElementById('show-more').classList.remove('d-none');
     loadAllPokemons();
 }
+
+
+function clearMarkedGenButtons() {
+    for (let i = 1; i < 9; i++) {
+        const element = document.getElementById(`select-generations${i}`);
+        element.classList.remove('bg-gen-buttons');
+    }
+}
+
 
 function showMorePokemon() {
     showLoader();
     offset += 20;
+    if ((maxGenValue - offset) < 20) {
+        limit = maxGenValue - offset;
+        document.getElementById('show-more').classList.add('d-none');
+        document.getElementById('show-generation-end').classList.remove('d-none');
+    }
     loadAllPokemons();
 }
-
 
 
 function changeEveryBgColor(pokemonType) {
@@ -126,26 +150,24 @@ async function searchPokemon() {
     document.getElementById('all-pokemon').innerHTML = ''; //clear pokemon stack
     for (let i = 0; i < pokemonNames['results'].length; i++) {
         const pokemonName = pokemonNames['results'][i]['name'];
-
         if (pokemonName.includes(searchInput)) {
             await loadEveryPokemon(pokemonName);
         }
-
     }
     // replace show more button with show all 
     document.getElementById('show-more').classList.add('d-none');
     document.getElementById('show-all').classList.remove('d-none');
+    document.getElementById('show-generation-end').classList.add('d-none');
+    clearMarkedGenButtons();
     removeloader();
 }
+
 
 async function loadAllPokemonNames() {
     let url = `https://pokeapi.co/api/v2/pokemon/?offset=0&limit=903`;
     let response = await fetch(url);
     pokemonNames = await response.json();
-
 }
-
-
 
 
 function showAllPokemon() {
@@ -153,9 +175,21 @@ function showAllPokemon() {
     document.getElementById('all-pokemon').innerHTML = ''; //clear pokemon stack
     document.getElementById('show-more').classList.remove('d-none');
     document.getElementById('show-all').classList.add('d-none');
+    clearMarkedGenButtons();
+    document.getElementById('select-generations1').classList.add('bg-gen-buttons'); //button generations 1 mark
+
     offset = 0;
     loadAllPokemons();
 
+}
+
+
+function markSelectedGeneration() {
+    for (let i = 1; i < 9; i++) {
+        const element = document.getElementById(`select-generations${i}`);
+        element.addEventListener("click", function () { element.classList.add('bg-gen-buttons') });
+
+    }
 }
 
 
@@ -164,6 +198,7 @@ function showLoader() {
     document.getElementById('body').style.overflow = "hidden";
 }
 
+
 function removeloader() {
     document.getElementById('loader-container').classList.add('d-none');
     document.getElementById('body').style.overflow = "scroll";
@@ -171,7 +206,6 @@ function removeloader() {
 
 
 //tab title change
-
 let tabTitle = document.title;
 window.addEventListener("blur", () => {
     document.title = "Come back :(";
