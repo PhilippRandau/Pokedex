@@ -41,6 +41,19 @@ h3 {
     height: 100vh;
     width: 100vw;
     z-index: 3;
+    /* animation: spin-anim 1.2s linear infinite; */
+    animation-name: slideload;
+    animation-duration: 75ms;
+}
+
+@keyframes slideload {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 .spinner {
@@ -149,7 +162,7 @@ form input:focus {
     margin-bottom: 20px;
 }
 
-.jump-top{
+.jump-top {
     text-decoration: none;
     color: white;
     font-weight: 700;
@@ -702,6 +715,51 @@ footer a {
 
 .d-none {
     display: none;
+}
+
+.fadeOutAndHide {
+    animation: fadeOutAndHide ease-in 700ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    overflow: hidden;
+}
+
+
+@keyframes fadeOutAndHide {
+    0% {
+        opacity: 1;
+    }
+
+    99% {
+        opacity: 0;
+        height: 100%;
+    }
+
+    100% {
+        height: 0;
+    }
+}
+
+.fadeInAndShow {
+    animation: fadeInAndShow ease-in 50ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    overflow: hidden;
+}
+
+@keyframes fadeInAndShow {
+    0% {
+        height: 0;
+    }
+
+    1% {
+        opacity: 0;
+        height: 100%;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 /* responsive */

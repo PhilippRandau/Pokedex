@@ -194,13 +194,15 @@ function markSelectedGeneration() {
 
 
 function showLoader() {
-    document.getElementById('loader-container').classList.remove('d-none');
+    document.getElementById('loader-container').classList.remove('fadeOutAndHide');
+    document.getElementById('loader-container').classList.add('fadeInAndShow');
     document.getElementById('body').style.overflow = "hidden";
 }
 
 
 function removeloader() {
-    document.getElementById('loader-container').classList.add('d-none');
+    document.getElementById('loader-container').classList.remove('fadeInAndShow');
+    document.getElementById('loader-container').classList.add('fadeOutAndHide');
     document.getElementById('body').style.overflow = "scroll";
 }
 
