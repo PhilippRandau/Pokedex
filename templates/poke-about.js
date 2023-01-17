@@ -30,7 +30,7 @@ function buttonStyleDeAct() {
 
 function showPokemonSpecies() {
     let pokemonSpecies = document.getElementById('pokemon-species');
-    let modifiedSpeciesName = currentPokemonSpecies['genera'][7]['genus'].split(' ')
+    let modifiedSpeciesName = currentPokemonSpecies['genera'][7]['genus'].split(' ') //remove 'pokemon' from text
     pokemonSpecies.innerHTML = `${modifiedSpeciesName[0]}`;
 }
 
