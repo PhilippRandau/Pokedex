@@ -2,7 +2,6 @@
 let currentPokemon;
 let currentPokemonSpecies;
 let currentPokemonEvolution;
-let evolutionSpeciesBasePokemon;
 
 
 async function loadPokemon(currentPokemonName) {
@@ -11,7 +10,6 @@ async function loadPokemon(currentPokemonName) {
     currentPokemon = await response.json();
     await loadPokemonSpecies();
     await loadPokemonEvolution();
-
     showDetailsPokemon();
 }
 
@@ -24,42 +22,60 @@ async function loadPokemonSpecies() {
 
 
 function showDetailsPokemon() {
+    showPokemonName();
+    showPokemonID();
+    showPokemonType();
+    showPokemonSprite();
+    showPokemonDescription();
+    showCardAndBlurBackground();
+    //show standard about stats
+    loadAbout();
+}
 
 
-    let pokemonName = document.getElementById('pokemon-name');
-    pokemonName.innerHTML = `${charToUpperCase(currentPokemon['species']['name'])}`;
+function showPokemonName(){
+    document.getElementById('pokemon-name').innerHTML = innerHTMLshowPokemonName();
+}
 
-    let pokemonID = document.getElementById('pokemon-id');
-    pokemonID.innerHTML = `#${pokemonIDFillWithZeros(currentPokemon['id'])}`
 
+function showPokemonID(){
+    document.getElementById('pokemon-id').innerHTML = innerHTMLshowPokemonID();
+}
+
+
+function showPokemonType(){
     let pokemonType = document.getElementById('pokemon-type');
     pokemonType.innerHTML = '';
     for (let itype = 0; itype < currentPokemon['types'].length; itype++) {
         const type = currentPokemon['types'][itype]['type']['name'];
-        pokemonType.innerHTML += `<span id="type-color${itype}" class="pokemon-type">${charToUpperCase(type)}</span>`;
-        let typeColor = document.getElementById(`type-color${itype}`);
-        changeCardColor(typeColor, type, itype);
+        pokemonType.innerHTML += innerHTMLshowPokemonType(itype, type);
+        changeCardColor(type, itype);
     }
+}
 
 
-    let pokemonSprite = document.getElementById('pokemon-sprite')
-    pokemonSprite.src = `${currentPokemon['sprites']['other']['official-artwork']['front_default']}`;
-
-    let pokemonDescription = document.getElementById('description');
-
-    pokemonDescription.innerHTML = /*html*/`<span>${removeSignFromText()}</span>`;
 
 
-    //show pokemon details card
+function showPokemonSprite(){
+    document.getElementById('pokemon-sprite').src = `${currentPokemon['sprites']['other']['official-artwork']['front_default']}`;
+}
+
+
+function showPokemonDescription(){
+    document.getElementById('description').innerHTML = innerHTMLshowPokemonDescription();
+}
+
+
+function showCardAndBlurBackground(){
+    document.getElementById('body').style.overflow = "hidden";
     document.getElementById('pokemon-details').classList.remove('d-none');
     document.getElementById('container').classList.add('blur');
     document.getElementById('generations').classList.add('blur');
     document.getElementById('header').classList.add('blur');
     document.getElementById('footer').classList.add('blur');
-
-    //show standard about stats
-    loadAbout();
 }
+
+
 
 function showEnglishFlavorText() {
     for (let i = 0; i < currentPokemonSpecies['flavor_text_entries'].length; i++) {
@@ -75,7 +91,8 @@ function removeSignFromText() {
 }
 
 
-function changeCardColor(typeColor, type, itype) {
+function changeCardColor(type, itype) {
+    let typeColor = document.getElementById(`type-color${itype}`);
     let bgDetails = document.getElementById('bg-details');
 
     switch (type) {
@@ -262,9 +279,11 @@ function unloadAllStats() {
     document.getElementById('pokemon-details-moves').classList.add('d-none');
 }
 
+
 function closeCard() {
     document.getElementById('pokemon-details').classList.add('anim-fadeout');
     setTimeout(() => {
+        document.getElementById('body').style.overflow = "scroll";
         document.getElementById('pokemon-details').classList.add('d-none');
         document.getElementById('pokemon-details').classList.remove('anim-fadeout');
         document.getElementById('container').classList.remove('blur');
@@ -274,6 +293,27 @@ function closeCard() {
     }, 490);
 }
 
+
 function doNotCloseCard(event) {
     event.stopPropagation();
 }
+
+
+// -------------------------html---------------------------------
+function innerHTMLshowPokemonName(){
+    return /*html*/`${charToUpperCase(currentPokemon['species']['name'])}`;
+}
+
+
+function innerHTMLshowPokemonID(){
+    return /*html*/`#${pokemonIDFillWithZeros(currentPokemon['id'])}`;
+}
+
+
+function innerHTMLshowPokemonDescription(){
+    return /*html*/`<span>${removeSignFromText()}</span>`;
+}
+
+function innerHTMLshowPokemonType(itype, type){
+    return /*html*/`<span id="type-color${itype}" class="pokemon-type">${charToUpperCase(type)}</span>`;
+ }
